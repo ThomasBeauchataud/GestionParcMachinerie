@@ -1,5 +1,7 @@
 # GestionParcMachinerie
 
+###Advice: Use IntellijIdea IDE
+
 ###1. Download and configure the CAS
 - If u want to use the authentication on the application, you have to donwload and configure the CAS accessible here : https://github.com/ffcfalcos/CAS 
 
