@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="GestionParcMachinerie" target="8" />
+      <module name="GestionParcMachinerie" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

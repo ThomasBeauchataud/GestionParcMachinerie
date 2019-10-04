@@ -4,6 +4,8 @@ import authentication.CasClientInterface;
 import managers.UserManagerInterface;
 
 import javax.inject.Inject;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,8 @@ public class AuthenticationServlet extends HttpServlet {
                     String userName = casClient.getNameByTicket(request.getParameter("ticket"));
                     userManager.createIfNotExists(userName);
                     request.getSession().setAttribute("username", userName);
-                    response.sendRedirect("http://localhost:8080/SR_TP2_war_exploded/passenger/travels");
+                    Context env = (Context)new InitialContext().lookup("java:comp/env");
+                    response.sendRedirect(env.lookup("app-domain-url") + "passenger/travels");
                 }
             }
             request.getRequestDispatcher("").forward(request, response);
