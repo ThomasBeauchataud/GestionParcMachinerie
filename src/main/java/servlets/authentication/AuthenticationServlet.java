@@ -31,7 +31,7 @@ public class AuthenticationServlet extends HttpServlet {
                     userManager.createIfNotExists(userName);
                     request.getSession().setAttribute("username", userName);
                     Context env = (Context)new InitialContext().lookup("java:comp/env");
-                    response.sendRedirect(env.lookup("app-domain-url") + "passenger/travels");
+                    response.sendRedirect(env.lookup("app-domain-url") + "home");
                 }
             }
             request.getRequestDispatcher("").forward(request, response);
