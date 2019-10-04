@@ -18,8 +18,8 @@
 ### 5. Setup context
 - Find _web.xml_ in _web/WEB-INF_
 - Modify parameters _db-user_, _db-password_ and _db-url_ for your configuration
-- Modify cas-url parameter if u previously deployed the cas
-- Modify the application domain url
+- Modify _cas-url_ parameter if u previously deployed the cas
+- Modify _app-domain_url_ with the url of the deployment domain
 
 ### 6. Setup deployment
 - Setup jdk on your IDE
