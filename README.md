@@ -13,7 +13,7 @@
 
 ### 4. Create database
 - Create a MYSQL Database
-- Execute _database_creation.sql_ in _src/main/resources/database_ to create a populate tables
+- Execute _database_creation.sql_ in _src/main/resources/database_ to create tables
 
 ### 5. Setup context
 - Find _web.xml_ in _web/WEB-INF_
