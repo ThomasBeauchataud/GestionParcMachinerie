@@ -1,5 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="inventory.machine.Machine" %>
+<%@ page import="beans.Machine" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
