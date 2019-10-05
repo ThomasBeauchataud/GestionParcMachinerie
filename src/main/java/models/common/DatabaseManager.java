@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 
 @ApplicationScoped
 @Default
-public class DatabaseManager {
+public class DatabaseManager implements DatabaseManagerInterface {
 
     private Connection connection;
 
@@ -25,10 +25,11 @@ public class DatabaseManager {
             String db_login = (String)env.lookup("db-user");
             String db_password = (String)env.lookup("db-password");
             this.connection = DriverManager.getConnection(db_url, db_login, db_password);
+            return this.connection;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
         }
-        return null;
     }
 
 }
