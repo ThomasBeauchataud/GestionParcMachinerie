@@ -10,13 +10,8 @@
     
     <context-param>
         <param-name>cas-url</param-name>
-        <param-value>//localhost:36878/web_war_exploded/login?service=GestionParcMachinerie</param-value>
+        <param-value>//localhost:36878/web_war_exploded/</param-value>
     </context-param>
-    <env-entry>
-        <env-entry-name>app-domain-url</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>http://localhost:8080/web_war_exploded/</env-entry-value>
-    </env-entry>
     <env-entry>
         <env-entry-name>db-user</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>

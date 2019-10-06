@@ -11,7 +11,7 @@ import java.io.IOException;
  * This servlet permit to a client to manage his commands
  */
 @WebServlet(name = "client_command", urlPatterns = "/command")
-public class ClientCommandServlet extends HttpServlet {
+public class ClientCommandServlet extends AbstractServlet {
 
     /**
      * Todo secure the access to this form with annotation

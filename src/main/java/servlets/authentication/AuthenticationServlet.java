@@ -26,18 +26,27 @@ public class AuthenticationServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if(request.getSession().getAttribute("userName") == null) {
-                if (request.getParameter("ticket") != null && casClient.isValidTicket(request.getParameter("ticket"))) {
-                    String userName = casClient.getNameByTicket(request.getParameter("ticket"));
+                if (request.getParameter("ticket") != null
+                        && request.getParameter("username") != null
+                        && casClient.isValidTicket(request.getParameter("ticket"))) {
+                    String userName = request.getParameter("username");
                     userManager.createIfNotExists(userName);
                     request.getSession().setAttribute("username", userName);
-                    Context env = (Context)new InitialContext().lookup("java:comp/env");
-                    response.sendRedirect(env.lookup("app-domain-url") + "home");
+                    response.sendRedirect("home");
                 }
             }
             request.getRequestDispatcher("").forward(request, response);
         }  catch (Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    /**
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     */
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+        doGet(request, response);
     }
 
 }
