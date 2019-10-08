@@ -15,8 +15,8 @@ public class LoginServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             final String url = getServletContext().getInitParameter("cas-url") +
-                    "login?service=GestionParcMachinerie&authPage=" +
-                    request.getRequestURL().toString().replace("login","authentication");
+                    "login?service=GestionParcMachinerie&loginFinalPage=" +
+                    request.getRequestURL().toString().replace("login","login-final");
             response.sendRedirect(url);
         } catch (Exception e) {
             System.err.println(e.getMessage());

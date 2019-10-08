@@ -4,15 +4,13 @@ import authentication.CasClientInterface;
 import managers.UserManagerInterface;
 
 import javax.inject.Inject;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "authentication", urlPatterns = "/authentication")
-public class AuthenticationServlet extends HttpServlet {
+@WebServlet(name = "login-final", urlPatterns = "/login-final")
+public class LoginFinalServlet extends HttpServlet {
 
     @Inject
     private CasClientInterface casClient;
