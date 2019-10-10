@@ -1,4 +1,4 @@
-package beans.enums;
+package beans.entities.enums;
 
 public enum AccessoryFamily {
 

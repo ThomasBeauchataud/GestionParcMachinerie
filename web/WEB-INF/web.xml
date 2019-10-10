@@ -7,25 +7,5 @@
     <session-config>
         <session-timeout>60</session-timeout>
     </session-config>
-    
-    <context-param>
-        <param-name>cas-url</param-name>
-        <param-value>//localhost:36878/web_war_exploded/</param-value>
-    </context-param>
-    <env-entry>
-        <env-entry-name>db-user</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value></env-entry-value>
-    </env-entry>
-    <env-entry>
-        <env-entry-name>db-password</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value></env-entry-value>
-    </env-entry>
-    <env-entry>
-        <env-entry-name>db-url</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value></env-entry-value>
-    </env-entry>
 
 </web-app>

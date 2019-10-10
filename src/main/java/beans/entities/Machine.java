@@ -1,8 +1,8 @@
-package beans;
+package beans.entities;
 
-import beans.enums.MachineFamily;
-import beans.enums.MachineModel;
-import beans.enums.Status;
+import beans.entities.enums.MachineFamily;
+import beans.entities.enums.MachineModel;
+import beans.entities.enums.Status;
 
 public class Machine {
 
