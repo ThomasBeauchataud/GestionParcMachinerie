@@ -8,4 +8,43 @@
         <session-timeout>60</session-timeout>
     </session-config>
 
+    <!-- *** CAS Parameters *** -->
+
+    <env-entry>
+        <env-entry-name>cas-url</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>http://localhost:36878/web_war_exploded/</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>application-name</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>GestionParcMachinerie</env-entry-value>
+    </env-entry>
+
+    <!-- *** Logger Parameters *** -->
+
+    <env-entry>
+        <env-entry-name>log-path</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>D:/_Code_programmes/Programme_Java/GestionParcMachinerie/logs/</env-entry-value>
+    </env-entry>
+
+    <!-- *** Database Parameters *** -->
+
+    <env-entry>
+        <env-entry-name>db-user</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>root</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>db-password</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>0000</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>db-url</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>//localhost:3306/cas</env-entry-value>
+    </env-entry>
+
 </web-app>

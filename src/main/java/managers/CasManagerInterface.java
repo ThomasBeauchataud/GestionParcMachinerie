@@ -10,4 +10,6 @@ public interface CasManagerInterface {
 
     boolean isAuthenticated(HttpServletRequest request);
 
+    String generateCasLoginUrl();
+
 }

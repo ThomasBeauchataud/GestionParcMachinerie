@@ -1,6 +1,7 @@
 package managers;
 
-import common.ConfigManager;
+import beans.NavigationController;
+import beans.SessionManagement;
 import common.Logger;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -11,6 +12,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
@@ -18,23 +20,36 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @ApplicationScoped
 @Default
 @SuppressWarnings("unchecked")
 public class CasManager implements CasManagerInterface {
 
-    private static final String serviceName = "GestionParcMachinerie";
-
     @Inject
-    private SessionManagerInterface sessionManager;
+    private SessionManagement sessionManagement;
+    @Inject
+    private NavigationController navigationController;
+
+    private String casUrl;
+    private String applicationName;
+
+    @PostConstruct
+    public void init() {
+        try {
+            Context env = (Context) new InitialContext().lookup("java:comp/env");
+            casUrl = (String)env.lookup("cas-url");
+            applicationName = (String)env.lookup("application-name");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public JSONObject getUserInformation(String ticket) {
         try {
             JSONObject jsonRequest = new JSONObject();
             jsonRequest.put("ticket", ticket);
-            final String url = ConfigManager.casUrl + "api/consultation";
+            final String url = casUrl + "api/consultation";
             JSONObject jsonResponse = (JSONObject) new JSONParser().parse(sendPost(url, jsonRequest.toJSONString()));
             if((long)jsonResponse.get("returnCode") == 0) {
                 return jsonResponse;
@@ -50,22 +65,13 @@ public class CasManager implements CasManagerInterface {
         try {
             JSONObject jsonRequest = new JSONObject();
             jsonRequest.put("ticket", ticket);
-            jsonRequest.put("service", serviceName);
-            final String url = ConfigManager.casUrl + "api/verification";
+            jsonRequest.put("service", applicationName);
+            final String url = casUrl + "api/verification";
             JSONObject jsonResponse = (JSONObject) new JSONParser().parse(sendPost(url, jsonRequest.toJSONString()));
             return (long)jsonResponse.get("returnCode") == 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }
-    }
-
-    public void redirectCas(HttpServletResponse response) {
-        try {
-            Context env = (Context) new InitialContext().lookup("java:comp/env");
-            response.sendRedirect((String) env.lookup("cas-url"));
-        } catch (Exception e) {
-            Logger.log("cas-client", e.getMessage());
         }
     }
 
@@ -77,12 +83,19 @@ public class CasManager implements CasManagerInterface {
                 JSONObject userInformation = this.getUserInformation(ticketValue);
                 String name = (String)userInformation.get("name");
                 String services = ((String)userInformation.get("services"));
-                sessionManager.setSession(name, services.contains("CAS"));
+                sessionManagement.setName(name);
+                sessionManagement.setAdmin(services.contains("CAS"));
+                request.getSession(true);
                 return true;
             }
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String generateCasLoginUrl() {
+        return casUrl + "login?service="+applicationName+"&loginFinalPage="+navigationController.getApplicationUrl();
     }
 
     private String getTicketInCookies(Cookie[] cookies) {
