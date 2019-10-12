@@ -8,7 +8,7 @@
 <f:event type="preRenderView" listener="#{sessionManagement.isAuthenticated}" />
 
 <div style="display: inline-block;">
-    <h:outputText value="User : #{sessionManagement.name}"/><br/> ee
+    <h:outputText value="User : #{sessionManagement.name}"/><br/>
 </div>
 <div style="display: inline-block; float: right; vertical-align: center">
     <p:commandButton type="button" value="Manage Users" rendered="#{sessionManagement.admin}" style="display: inline-block; vertical-align: center"
