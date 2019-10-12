@@ -1,0 +1,22 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<f:event type="preRenderView" listener="#{sessionManagement.isAuthenticated}" />
+
+<div style="display: inline-block;">
+    <h:outputText value="User : #{sessionManagement.name}"/><br/>
+</div>
+<div style="display: inline-block; float: right; vertical-align: center">
+    <p:commandButton type="button" value="Manage Users" rendered="#{sessionManagement.admin}" style="display: inline-block; vertical-align: center"
+                     onclick = "window.open('http://localhost:36878/web_war_exploded/login-final', '_blank')" >
+    </p:commandButton>
+    <h:form style="display: inline-block; vertical-align: center">
+        <p:commandButton id="logout" type="submit" action="#{sessionManagement.logout}" value="Logout" ajax="false"/>
+    </h:form>
+</div>
+
+</ui:composition>

@@ -1,6 +1,6 @@
 package models;
 
-import beans.Machine;
+import beans.entities.Machine;
 import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
