@@ -7,16 +7,33 @@
 
 <f:event type="preRenderView" listener="#{sessionManagement.isAuthenticated}" />
 
-<div style="display: inline-block;">
-    <h:outputText value="User : #{sessionManagement.name}"/><br/>
-</div>
-<div style="display: inline-block; float: right; vertical-align: center">
-    <p:commandButton type="button" value="Manage Users" rendered="#{sessionManagement.admin}" style="display: inline-block; vertical-align: center"
-                     onclick = "window.open('http://localhost:36878/web_war_exploded/login-final', '_blank')" >
-    </p:commandButton>
-    <h:form style="display: inline-block; vertical-align: center">
-        <p:commandButton id="logout" type="submit" action="#{sessionManagement.logout}" value="Logout" ajax="false"/>
-    </h:form>
-</div>
+<h:form>
+    <p:growl id="messages"/>
+
+    <p:menubar>
+        <p:menuitem value="Home" url = "#{navigationController.applicationUrl}" />
+
+        <p:submenu label="Client" url="#">
+            <p:menuitem value="Create" url="#"/>
+        </p:submenu>
+
+        <p:submenu label="Command" url="#">
+            <p:menuitem value="Create" url="#" />
+        </p:submenu>
+
+        <p:submenu label="Inventory" url="#">
+            <p:menuitem value="Create" url="#" />
+        </p:submenu>
+
+        <p:submenu label="Admin" icon="pi pi-cog" rendered="#{sessionManagement.admin}">
+            <p:menuitem value = "Manage Users Access" url = "#{navigationController.goToCas}"/>
+        </p:submenu>
+
+        <f:facet name="options">
+            <p:outputLabel style="margin:1px 10px 1px 1px;" value="User : #{sessionManagement.name}"/>
+            <p:commandButton type="submit" value="Logout" action="#{sessionManagement.logout}" />
+        </f:facet>
+    </p:menubar>
+</h:form>
 
 </ui:composition>

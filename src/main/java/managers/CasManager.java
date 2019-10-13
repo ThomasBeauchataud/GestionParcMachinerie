@@ -95,7 +95,7 @@ public class CasManager implements CasManagerInterface {
 
     @Override
     public String generateCasLoginUrl() {
-        return casUrl + "login?service="+applicationName+"&loginFinalPage="+navigationController.getApplicationUrl();
+        return casUrl + "login?service="+applicationName+"&redirect="+navigationController.getApplicationUrl();
     }
 
     private String getTicketInCookies(Cookie[] cookies) {
