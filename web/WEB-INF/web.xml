@@ -46,8 +46,8 @@
         <env-entry-type>java.lang.String</env-entry-type>
         <env-entry-value>//localhost:3306/cas</env-entry-value>
     </env-entry>
-    <!-- GestionParcMachinerie -->
 
+    <!-- GestionParcMachinerie -->
     <env-entry>
         <env-entry-name>db-user</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
