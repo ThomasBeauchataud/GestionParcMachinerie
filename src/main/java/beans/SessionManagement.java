@@ -52,13 +52,14 @@ public class SessionManagement implements Serializable {
     }
 
     public void isAuthenticated () {
+        /*
         if(name == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(navigationController.getApplicationUrl());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
 }
