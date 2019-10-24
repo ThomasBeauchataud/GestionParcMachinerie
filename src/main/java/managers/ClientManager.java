@@ -8,8 +8,10 @@ import javax.enterprise.inject.Default;
 @ApplicationScoped
 @Default
 public class ClientManager implements ClientManagerInterface {
+
     @Override
     public void createClient(Client client) {
 
     }
+
 }
