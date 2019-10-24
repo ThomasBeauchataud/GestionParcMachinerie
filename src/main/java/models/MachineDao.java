@@ -77,7 +77,7 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
         );
     }
 
-    private static String insert = "INSERT INTO machine (family, model, rentPrice, salePrice, businessDiscount, status) VALUES (?, ?, ?, ?, ?, ?)";
+    private static String insert = "INSERT INTO machine (family, model, rentPrice, status) VALUES (?, ?, ?, ?)";
     private static String update = "UPDATE machine SET rentPrice = ?, status = ? WHERE id = ?";
     private static String selectById = "SELECT * FROM machine WHERE id = ?";
     private static String deleteById = "DELETE FROM machine WHERE id = ?";
