@@ -25,11 +25,7 @@
             <p:inputText value="#{machineCreation.model}" required="true"/>
             <h:outputText value="Rent price: "/>
             <p:inputNumber value="#{machineCreation.rentPrice}" required="true"/>
-            <h:outputText value="Business discount: "/>
-            <p:inputNumber value="#{machineCreation.businessDiscount}" required="true"/>
-            <h:outputText value="Status : "/>
-            <p:inputNumber value="#{machineCreation.businessDiscount}" required="true"/>
-            <p:commandButton id="submit" type="submit" action="#{machineCreation.execute}" value="Create" ajax="false"/>
+            <p:commandButton id="submit" type="submit" action="#{machineCreation.execute()}" value="Create" ajax="false"/>
         </h:panelGrid>
     </h:form>
 

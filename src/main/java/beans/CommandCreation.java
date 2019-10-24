@@ -2,9 +2,9 @@ package beans;
 
 import beans.common.NavigationController;
 import beans.entities.Command;
-import beans.entities.Machine;
+import beans.entities.internal.MachineCatalog;
+import managers.CatalogManagerInterface;
 import managers.CommandManagerInterface;
-import managers.MachineManagerInterface;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -21,46 +21,28 @@ public class CommandCreation extends Command implements Serializable {
     @Inject
     private CommandManagerInterface commandManager;
     @Inject
-    private MachineManagerInterface machineManager;
-    @Inject
     private NavigationController navigationController;
+    @Inject
+    private CatalogManagerInterface catalogManager;
 
-    private List<Machine> machineCatalog;
-    private List<Machine> machineCatalogFiltered;
-    private List<Machine> machineList;
-    private List<Machine> basket;
+    private List<MachineCatalog> machineCatalog;
+    private List<MachineCatalog> machineCatalogFiltered;
+    private List<Command> basket;
     private int count;
     private String filterValue;
 
     @PostConstruct
     public void init() {
-        machineList = machineManager.findAllMachines();
-        machineCatalog = machineManager.filterMachinesForCatalog(machineList);
+        machineCatalog = catalogManager.findMachineCatalog();
         machineCatalogFiltered = machineCatalog;
     }
 
-    public List<Machine> getMachineCatalog() {
-        return machineCatalog;
-    }
-
-    public void setMachineCatalog(List<Machine> machineCatalog) {
-        this.machineCatalog = machineCatalog;
-    }
-
-    public List<Machine> getMachineCatalogFiltered() {
+    public List<MachineCatalog> getMachineCatalogFiltered() {
         return machineCatalogFiltered;
     }
 
-    public void setMachineCatalogFiltered(List<Machine> machineCatalogFiltered) {
+    public void setMachineCatalogFiltered(List<MachineCatalog> machineCatalogFiltered) {
         this.machineCatalogFiltered = machineCatalogFiltered;
-    }
-
-    public List<Machine> getMachineList() {
-        return machineList;
-    }
-
-    public void setMachineList(List<Machine> machineList) {
-        this.machineList = machineList;
     }
 
     public int getCount() {
@@ -91,11 +73,13 @@ public class CommandCreation extends Command implements Serializable {
     public void filter() {
         machineCatalogFiltered = new ArrayList<>();
         if(filterValue != null && !filterValue.equals("")) {
-            for(Machine machine : machineCatalog) {
+            for(MachineCatalog machine : machineCatalog) {
                 if(machine.getModel().contains(filterValue)) {
                     machineCatalogFiltered.add(machine);
                 }
             }
+        } else {
+            machineCatalogFiltered = machineCatalog;
         }
     }
 

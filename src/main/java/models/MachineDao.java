@@ -21,7 +21,6 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
             preparedStatement.setString(1, machine.getFamily());
             preparedStatement.setString(2, machine.getModel());
             preparedStatement.setInt(3, machine.getRentPrice());
-            preparedStatement.setString(4, machine.getStatus());
             preparedStatement.execute();
         } catch (Exception e) {
             log(e.getMessage());
@@ -33,8 +32,7 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
         try {
             PreparedStatement preparedStatement = this.getConnection().prepareStatement(update);
             preparedStatement.setInt(1, machine.getRentPrice());
-            preparedStatement.setString(2, machine.getStatus());
-            preparedStatement.setInt(3, machine.getId());
+            preparedStatement.setInt(2, machine.getId());
             preparedStatement.execute();
         } catch (Exception e) {
             log(e.getMessage());
@@ -62,13 +60,12 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
                 resultSet.getInt("id"),
                 resultSet.getString("family"),
                 resultSet.getString("model"),
-                resultSet.getInt("rentPrice"),
-                resultSet.getString("status")
+                resultSet.getInt("rentPrice")
         );
     }
 
-    private static String insert = "INSERT INTO machine (family, model, rentPrice, status) VALUES (?, ?, ?, ?)";
-    private static String update = "UPDATE machine SET rentPrice = ?, status = ? WHERE id = ?";
+    private static String insert = "INSERT INTO machine (family, model, rentPrice) VALUES (?, ?, ?)";
+    private static String update = "UPDATE machine SET rentPrice = ? WHERE id = ?";
     private static String select = "SELECT * FROM machine";
     private static String selectById = "SELECT * FROM machine WHERE id = ?";
     private static String deleteById = "DELETE FROM machine WHERE id = ?";

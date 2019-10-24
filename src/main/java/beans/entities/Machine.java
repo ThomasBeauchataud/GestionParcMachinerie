@@ -8,7 +8,6 @@ public class Machine implements Serializable {
     private String family;
     private String model;
     private int rentPrice;
-    private String status;
 
     public Machine() { }
 
@@ -16,12 +15,11 @@ public class Machine implements Serializable {
         this.id = id;
     }
 
-    public Machine(int id, String family, String model, int rentPrice, String status) {
+    public Machine(int id, String family, String model, int rentPrice) {
         this.id = id;
         this.family = family;
         this.model = model;
         this.rentPrice = rentPrice;
-        this.status = status;
     }
 
     public int getId() {
@@ -30,14 +28,6 @@ public class Machine implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getFamily() {
