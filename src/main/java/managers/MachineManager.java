@@ -21,7 +21,7 @@ public class MachineManager implements MachineManagerInterface {
 
     @Override
     public void createMachine(Machine machine) {
-
+        machineDao.insert(machine);
     }
 
     @Override
