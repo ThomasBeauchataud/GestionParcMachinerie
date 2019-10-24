@@ -1,4 +1,4 @@
-create table machine
+create table command
 (
     id                  int auto_increment primary key,
     user_id             int,
