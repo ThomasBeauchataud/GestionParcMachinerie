@@ -14,4 +14,9 @@ public class CommandManager implements CommandManagerInterface {
         return new Command[0];
     }
 
+    @Override
+    public void createCommand(Command command) {
+
+    }
+
 }

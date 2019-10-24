@@ -49,4 +49,8 @@ public class NavigationController implements Serializable {
         return "/commands/creation.xhtml?faces-redirect=true";
     }
 
+    public String goToCommands() {
+        return "/commands/index.xhtml?faces-redirect=true";
+    }
+
 }

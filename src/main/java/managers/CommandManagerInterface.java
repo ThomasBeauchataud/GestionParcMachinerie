@@ -10,4 +10,10 @@ public interface CommandManagerInterface {
      */
     Command[] findAllCommands();
 
+    /**
+     * Create a new Command and store it in the database
+     * @param command Command
+     */
+    void createCommand(Command command);
+
 }

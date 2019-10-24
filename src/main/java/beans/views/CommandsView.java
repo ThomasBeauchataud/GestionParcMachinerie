@@ -13,7 +13,7 @@ import java.util.List;
 
 @Named
 @RequestScoped
-public class RentsView implements Serializable {
+public class CommandsView implements Serializable {
 
     @Inject
     private CommandManagerInterface commandManager;
