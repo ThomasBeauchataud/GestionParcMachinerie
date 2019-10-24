@@ -21,7 +21,7 @@ public class MachineView implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.machineList = Arrays.asList(machineManager.findAllMachines());
+        this.machineList = machineManager.findAllMachines();
     }
 
     public List<Machine> getCommandList() {
