@@ -7,20 +7,21 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @ApplicationScoped
 @Default
-public class MachineDao extends CommonDao implements MachineDaoInterface {
+@SuppressWarnings("FieldCanBeLocal")
+public class MachineDao extends CommonDao<Machine> implements MachineDaoInterface {
 
     @Override
     public void insert(Machine machine) {
         try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insertMachine);
-            preparedStatement.setString(1, machine.getFamily().name());
-            preparedStatement.setString(2, machine.getModel().name());
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insert);
+            preparedStatement.setString(1, machine.getFamily());
+            preparedStatement.setString(2, machine.getModel());
             preparedStatement.setInt(3, machine.getRentPrice());
-            preparedStatement.setInt(4, machine.getSalePrice());
-            preparedStatement.setString(5, machine.getStatus().name());
+            preparedStatement.setString(4, machine.getStatus());
             preparedStatement.execute();
         } catch (Exception e) {
             log(e.getMessage());
@@ -30,13 +31,10 @@ public class MachineDao extends CommonDao implements MachineDaoInterface {
     @Override
     public void update(Machine machine) {
         try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(updateMachine);
-            preparedStatement.setString(1, machine.getFamily().name());
-            preparedStatement.setString(2, machine.getModel().name());
-            preparedStatement.setInt(3, machine.getRentPrice());
-            preparedStatement.setInt(4, machine.getSalePrice());
-            preparedStatement.setString(5, machine.getStatus().name());
-            preparedStatement.setInt(6, machine.getId());
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(update);
+            preparedStatement.setInt(1, machine.getRentPrice());
+            preparedStatement.setString(2, machine.getStatus());
+            preparedStatement.setInt(3, machine.getId());
             preparedStatement.execute();
         } catch (Exception e) {
             log(e.getMessage());
@@ -46,19 +44,11 @@ public class MachineDao extends CommonDao implements MachineDaoInterface {
     @Override
     public Machine getById(int id) {
         try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectByMachineId);
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectById);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            return new Machine(
-                    resultSet.getInt("id"),
-                    resultSet.getString("family"),
-                    resultSet.getString("model"),
-                    resultSet.getInt("rentPrice"),
-                    resultSet.getInt("salePrice"),
-                    resultSet.getInt("businessDiscount"),
-                    resultSet.getString("status")
-            );
+            return this.generateEntity(resultSet);
         } catch (Exception e) {
             log(e.getMessage());
             return null;
@@ -66,14 +56,9 @@ public class MachineDao extends CommonDao implements MachineDaoInterface {
     }
 
     @Override
-    public Machine getByName(String name) {
-        return null; // Multiple machines have the same model
-    }
-
-    @Override
     public void deleteById(int id) {
         try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(deleteByMachineId);
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(deleteById);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (Exception e) {
@@ -82,12 +67,20 @@ public class MachineDao extends CommonDao implements MachineDaoInterface {
     }
 
     @Override
-    public void deleteByName(String name) {
-        // Multiple machines have the same model
+    protected Machine generateEntity(ResultSet resultSet) throws SQLException {
+        return new Machine(
+                resultSet.getInt("id"),
+                resultSet.getString("family"),
+                resultSet.getString("model"),
+                resultSet.getInt("rentPrice"),
+                resultSet.getString("status")
+        );
     }
 
-    private static String insertMachine = "INSERT INTO machine (family, model, rentPrice, salePrice, businessDiscount, status) VALUES (?, ?, ?, ?, ?, ?)";
-    private static String updateMachine = "UPDATE machine SET family = ?, model = ?, rentPrice = ?, salePrice = ?, businessDiscount = ?, status = ? WHERE id = ?";
-    private static String selectByMachineId = "SELECT * FROM machine WHERE id = ?";
-    private static String deleteByMachineId = "DELETE FROM machine WHERE id = ?";
+    private static String insert = "INSERT INTO machine (family, model, rentPrice, salePrice, businessDiscount, status) VALUES (?, ?, ?, ?, ?, ?)";
+    private static String update = "UPDATE machine SET rentPrice = ?, status = ? WHERE id = ?";
+    private static String selectById = "SELECT * FROM machine WHERE id = ?";
+    private static String deleteById = "DELETE FROM machine WHERE id = ?";
+
+
 }

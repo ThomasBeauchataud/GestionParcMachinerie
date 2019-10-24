@@ -8,10 +8,6 @@ public interface CommonDaoInterface<T> {
 
     T getById(int id);
 
-    T getByName(String name);
-
     void deleteById(int id);
-
-    void deleteByName(String name);
 
 }

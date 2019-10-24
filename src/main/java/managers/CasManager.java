@@ -1,8 +1,7 @@
 package managers;
 
-import beans.NavigationController;
-import beans.SessionManagement;
-import common.Logger;
+import beans.common.NavigationController;
+import beans.common.SessionManagement;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -38,8 +37,8 @@ public class CasManager implements CasManagerInterface {
     public void init() {
         try {
             Context env = (Context) new InitialContext().lookup("java:comp/env");
-            casUrl = "http://localhost:8080/web_war_exploded/";
-            applicationName = "GestionParcMachinerie";
+            casUrl = (String)env.lookup("cas-url");
+            applicationName = (String)env.lookup("application-name");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,8 +90,7 @@ public class CasManager implements CasManagerInterface {
                 return true;
             }
             return false;
-        }
-        return true;*/
+        }*/
     }
 
     @Override

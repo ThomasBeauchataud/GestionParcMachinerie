@@ -4,8 +4,10 @@ import common.Logger;
 
 import javax.inject.Inject;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public abstract class CommonDao {
+public abstract class CommonDao<T> {
 
     @Inject
     private DatabaseManagerInterface databaseManager;
@@ -17,5 +19,7 @@ public abstract class CommonDao {
     protected void log(String message) {
         Logger.log("dao", message);
     }
+
+    protected abstract T generateEntity(ResultSet resultSet) throws SQLException;
 
 }

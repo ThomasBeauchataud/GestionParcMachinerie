@@ -1,29 +1,27 @@
 package beans.entities;
 
-import beans.entities.enums.MachineFamily;
-import beans.entities.enums.MachineModel;
-import beans.entities.enums.Status;
+import java.io.Serializable;
 
-public class Machine {
+public class Machine implements Serializable {
 
     private int id;
-    private MachineFamily family;
-    private MachineModel model;
+    private String family;
+    private String model;
     private int rentPrice;
-    private int salePrice;
-    private int businessDiscount;
-    private Status status;
+    private String status;
 
     public Machine() { }
 
-    public Machine(int id, String family, String model, int rentPrice, int salePrice, int businessDiscount, String status) {
+    public Machine(int id) {
         this.id = id;
-        this.family = MachineFamily.valueOf(family);
-        this.model = MachineModel.valueOf(model);
+    }
+
+    public Machine(int id, String family, String model, int rentPrice, String status) {
+        this.id = id;
+        this.family = family;
+        this.model = model;
         this.rentPrice = rentPrice;
-        this.salePrice = salePrice;
-        this.businessDiscount = businessDiscount;
-        this.status = Status.valueOf(status);
+        this.status = status;
     }
 
     public int getId() {
@@ -34,27 +32,27 @@ public class Machine {
         this.id = id;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public MachineFamily getFamily() {
+    public String getFamily() {
         return family;
     }
 
-    public void setFamily(MachineFamily family) {
+    public void setFamily(String family) {
         this.family = family;
     }
 
-    public MachineModel getModel() {
+    public String getModel() {
         return model;
     }
 
-    public void setModel(MachineModel model) {
+    public void setModel(String model) {
         this.model = model;
     }
 
@@ -66,18 +64,4 @@ public class Machine {
         this.rentPrice = rentPrice;
     }
 
-    public int getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(int salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public int getBusinessDiscount() {
-        return businessDiscount;
-    }
-    public void setBusinessDiscount(int businessDiscount) {
-        this.businessDiscount = businessDiscount;
-    }
 }

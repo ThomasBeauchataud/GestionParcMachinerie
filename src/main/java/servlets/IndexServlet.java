@@ -1,6 +1,6 @@
 package servlets;
 
-import beans.NavigationController;
+import beans.common.NavigationController;
 import managers.CasManagerInterface;
 
 import javax.inject.Inject;

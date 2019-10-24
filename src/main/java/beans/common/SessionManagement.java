@@ -1,4 +1,4 @@
-package beans;
+package beans.common;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;

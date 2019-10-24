@@ -1,4 +1,4 @@
-package beans;
+package beans.common;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -39,6 +39,14 @@ public class NavigationController implements Serializable {
 
     public void setGoToCas(String goToCas) {
         this.goToCas = goToCas;
+    }
+
+    public String goToClients() {
+        return "/clients/index.xhtml?faces-redirect=true";
+    }
+
+    public String goToCommandCreation() {
+        return "/commands/creation.xhtml?faces-redirect=true";
     }
 
 }

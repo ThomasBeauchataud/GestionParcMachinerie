@@ -1,0 +1,47 @@
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
+</h:head>
+<h:body>
+
+    <header>
+        <ui:include src="/authenticated-header.xhtml" />
+    </header>
+
+    <h:form>
+        <p:commandButton id="create" type="submit" action="#{navigationController.goToCommandCreation()}" value="Create New Command" ajax="false"/>
+    </h:form>
+
+    <div class="datatable">
+        <p:dataTable var="command" value="#{rentsView.commandList}">
+            <f:facet name="header">
+                User List
+            </f:facet>
+            <p:column headerText="Id">
+                <h:outputText value="#{command.id}" />
+            </p:column>
+
+            <p:column headerText="Client Name">
+                <h:outputText value="#{command.client.name}" />
+            </p:column>
+
+            <p:column headerText="Machine">
+                <h:outputText value="#{command.machine.id}" />
+            </p:column>
+
+            <p:column headerText="From">
+                <h:outputText value="#{command.from}" />
+            </p:column>
+
+            <p:column headerText="To">
+                <h:outputText value="#{command.to}" />
+            </p:column>
+
+        </p:dataTable>
+    </div>
+
+</h:body>
+</html>
