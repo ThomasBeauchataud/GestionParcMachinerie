@@ -8,6 +8,8 @@ public interface CommonDaoInterface<T> {
 
     T getById(int id);
 
+    T[] getAll();
+
     void deleteById(int id);
 
 }

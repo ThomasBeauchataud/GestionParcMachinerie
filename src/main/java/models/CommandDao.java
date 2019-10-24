@@ -7,12 +7,9 @@ import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Default
 @ApplicationScoped
@@ -31,27 +28,17 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
 
     @Override
     public Command getById(int id) {
-        return null;
+        return super.getById(selectById, id);
     }
 
     @Override
     public void deleteById(int id) {
-
+        super.deleteById(deleteById, id);
     }
 
     @Override
     public Command[] getAll() {
-        List<Command> commandList = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(select);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
-                commandList.add(this.generateEntity(resultSet));
-            }
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
-        return commandList.toArray(new Command[0]);
+        return super.getAll(select).toArray(new Command[0]);
     }
 
     @Override
@@ -66,5 +53,7 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
     }
 
     private static final String select = "SELECT * FROM command";
+    private static final String selectById = "SELECT * FROM command WHERE id = ?";
+    private static final String deleteById = "DELETE FROM command WHERE id = ?";
 
 }

@@ -43,27 +43,17 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
 
     @Override
     public Machine getById(int id) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectById);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return this.generateEntity(resultSet);
-        } catch (Exception e) {
-            log(e.getMessage());
-            return null;
-        }
+        return super.getById(selectById, id);
+    }
+
+    @Override
+    public Machine[] getAll() {
+        return super.getAll(select).toArray(new Machine[0]);
     }
 
     @Override
     public void deleteById(int id) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(deleteById);
-            preparedStatement.setInt(1, id);
-            preparedStatement.execute();
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
+        super.deleteById(deleteById, id);
     }
 
     @Override
@@ -79,6 +69,7 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
 
     private static String insert = "INSERT INTO machine (family, model, rentPrice, status) VALUES (?, ?, ?, ?)";
     private static String update = "UPDATE machine SET rentPrice = ?, status = ? WHERE id = ?";
+    private static String select = "SELECT * FROM machine";
     private static String selectById = "SELECT * FROM machine WHERE id = ?";
     private static String deleteById = "DELETE FROM machine WHERE id = ?";
 
