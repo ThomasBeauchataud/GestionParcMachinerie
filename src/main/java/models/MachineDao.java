@@ -21,8 +21,7 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
             preparedStatement.setString(1, machine.getFamily());
             preparedStatement.setString(2, machine.getModel());
             preparedStatement.setInt(3, machine.getRentPrice());
-            preparedStatement.setInt(4, machine.getBusinessDiscount());
-            preparedStatement.setString(5, machine.getStatus());
+            preparedStatement.setString(4, machine.getStatus());
             preparedStatement.execute();
         } catch (Exception e) {
             log(e.getMessage());
@@ -36,7 +35,6 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
             preparedStatement.setInt(1, machine.getRentPrice());
             preparedStatement.setString(2, machine.getStatus());
             preparedStatement.setInt(3, machine.getId());
-            preparedStatement.setInt(4, machine.getId());
             preparedStatement.execute();
         } catch (Exception e) {
             log(e.getMessage());
@@ -65,15 +63,14 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
                 resultSet.getString("family"),
                 resultSet.getString("model"),
                 resultSet.getInt("rentPrice"),
-                resultSet.getInt("businessDiscount"),
                 resultSet.getString("status")
         );
     }
 
-    private static String insert = "INSERT INTO machine (family, model, rentPrice, salePrice, businessDiscount, status) VALUES (?, ?, ?, ?, ?, ?)";
-    private static String update = "UPDATE machine SET rentPrice = ?, businessDiscount = ?, status = ? WHERE id = ?";
-    private static String selectById = "SELECT * FROM machine WHERE id = ?";
+    private static String insert = "INSERT INTO machine (family, model, rentPrice, status) VALUES (?, ?, ?, ?)";
+    private static String update = "UPDATE machine SET rentPrice = ?, status = ? WHERE id = ?";
     private static String select = "SELECT * FROM machine";
+    private static String selectById = "SELECT * FROM machine WHERE id = ?";
     private static String deleteById = "DELETE FROM machine WHERE id = ?";
 
 

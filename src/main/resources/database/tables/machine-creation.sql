@@ -4,6 +4,5 @@ create table machine
     family              varchar(255)  not null,
     model               varchar(255) not null,
     rentPrice           int not null,
-    businessDiscount    int not null,
     status              varchar(255) not null
 );
