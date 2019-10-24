@@ -14,4 +14,9 @@ public class ClientManager implements ClientManagerInterface {
 
     }
 
+    @Override
+    public Client findClientById(int id) {
+        return null;
+    }
+
 }
