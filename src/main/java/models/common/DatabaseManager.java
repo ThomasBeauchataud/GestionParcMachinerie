@@ -19,7 +19,6 @@ public class DatabaseManager implements DatabaseManagerInterface {
         }
         try {
             Class.forName( "com.mysql.cj.jdbc.Driver" );
-            Class.forName("models.common.SQLQuery");
             Context env = (Context)new InitialContext().lookup("java:comp/env");
             String db_url = "jdbc:mysql:" + env.lookup("db-url") + "?autoReconnect=true&useSSL=false";
             String db_login = (String)env.lookup("db-user");
