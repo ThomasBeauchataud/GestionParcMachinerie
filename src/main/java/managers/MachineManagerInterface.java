@@ -2,7 +2,15 @@ package managers;
 
 import beans.entities.Machine;
 
+import java.util.List;
+
 public interface MachineManagerInterface {
+
+    /**
+     * Create a machine in the database
+     * @param machine Machine
+     */
+    void createMachine(Machine machine);
 
     /**
      * Return a Machine from the database identified by his id
@@ -12,16 +20,16 @@ public interface MachineManagerInterface {
     Machine findMachineById(int id);
 
     /**
-     * Create a machine in the database
-     * @param machine Machine
+     * Return all Machines from the database
+     * @return List<Machine>
      */
-    void createMachine(Machine machine);
+    List<Machine> findAllMachines();
 
     /**
-     * Return all Machines from the database
-     * @return Machine[]
+     * Filter a Machine list to get a catalog
+     * @param machines List<Machine>
+     * @return List<Machine>
      */
-    Machine[] findAllMachines();
-
+    List<Machine> filterMachinesForCatalog(List<Machine> machines);
 
 }
