@@ -16,7 +16,7 @@ public class MachineManager implements MachineManagerInterface {
 
     @Override
     public Machine findMachineById(int id) {
-        return null;
+        return machineDao.getById(id);
     }
 
     @Override

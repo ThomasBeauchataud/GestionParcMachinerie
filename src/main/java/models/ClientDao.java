@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 @ApplicationScoped
 @Default
+@SuppressWarnings("FieldCanBeLocal")
 public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
 
     @Override

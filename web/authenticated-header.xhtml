@@ -14,16 +14,20 @@
         <p:menuitem value="Home" url = "#{navigationController.applicationUrl}" />
 
         <p:submenu label="Client" url="#">
-            <p:menuitem value="Create" url="#"/>
+            <p:menuitem value="Create" url="/clients/creation.xhtml"/>
+            <p:menuitem value="Manage" url="/clients/index.xhtml"/>
         </p:submenu>
 
         <p:submenu label="Command" url="#">
-            <p:menuitem value="Create" url="#" />
+            <p:menuitem value="Create" url="/commands/creation.xhtml" />
+            <p:menuitem value="Manage" url="/commands/index.xhtml" />
         </p:submenu>
 
         <p:submenu label="Inventory">
-            <p:menuitem value="View inventory" url="#{navigationController.goToMachines()}" />
-            <p:menuitem value="Create" url="#{navigationController.goToMachineCreation()}" />
+            <p:submenu label="Machines">
+                <p:menuitem value="Create" url="/inventory/machines/creation.xhtml" />
+                <p:menuitem value="Manage" url="/inventory/machines/index.xhtml" />
+            </p:submenu>
         </p:submenu>
 
         <p:submenu label="Admin" icon="pi pi-cog" rendered="#{sessionManagement.admin}">
