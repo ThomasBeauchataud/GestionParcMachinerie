@@ -3,8 +3,12 @@ package managers;
 import beans.entities.Machine;
 import models.MachineDaoInterface;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 
+@ApplicationScoped
+@Default
 public class MachineManager implements MachineManagerInterface {
 
     @Inject
@@ -15,4 +19,14 @@ public class MachineManager implements MachineManagerInterface {
         return null;
     }
 
+    @Override
+    public void createMachine(Machine machine) {
+
+    }
+
+    @Override
+    public Machine[] findAllMachines() {
+        Machine[] machines = machineDao.getAll();
+        return machines;
+    }
 }

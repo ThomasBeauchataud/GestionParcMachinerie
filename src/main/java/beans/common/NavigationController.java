@@ -53,4 +53,12 @@ public class NavigationController implements Serializable {
         return "/commands/index.xhtml?faces-redirect=true";
     }
 
+    public String goToMachineCreation() {
+        return "/machines/creation.xhtml?faces-redirect=true";
+    }
+
+    public String goToMachines() {
+        return "/machines/index.xhtml?faces-redirect=true";
+    }
+
 }

@@ -8,6 +8,7 @@ public class Machine implements Serializable {
     private String family;
     private String model;
     private int rentPrice;
+    private int businessDiscount;
     private String status;
 
     public Machine() { }
@@ -16,11 +17,12 @@ public class Machine implements Serializable {
         this.id = id;
     }
 
-    public Machine(int id, String family, String model, int rentPrice, String status) {
+    public Machine(int id, String family, String model, int rentPrice, int businessDiscount, String status) {
         this.id = id;
         this.family = family;
         this.model = model;
         this.rentPrice = rentPrice;
+        this.businessDiscount = businessDiscount;
         this.status = status;
     }
 
@@ -63,5 +65,9 @@ public class Machine implements Serializable {
     public void setRentPrice(int rentPrice) {
         this.rentPrice = rentPrice;
     }
+
+    public int getBusinessDiscount() {return businessDiscount;}
+
+    public void setBusinessDiscount(int businessDiscount) {this.businessDiscount = businessDiscount;}
 
 }

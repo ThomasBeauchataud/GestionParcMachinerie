@@ -11,4 +11,17 @@ public interface MachineManagerInterface {
      */
     Machine findMachineById(int id);
 
+    /**
+     * Create a machine in the database
+     * @param machine Machine
+     */
+    void createMachine(Machine machine);
+
+    /**
+     * Return all Machines from the database
+     * @return Machine[]
+     */
+    Machine[] findAllMachines();
+
+
 }

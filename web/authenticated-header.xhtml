@@ -22,7 +22,8 @@
         </p:submenu>
 
         <p:submenu label="Inventory">
-            <p:menuitem value="Create" url="/machine-creation.xhtml" />
+            <p:menuitem value="View inventory" url="#{navigationController.goToMachines()}" />
+            <p:menuitem value="Create" url="#{navigationController.goToMachineCreation()}" />
         </p:submenu>
 
         <p:submenu label="Admin" icon="pi pi-cog" rendered="#{sessionManagement.admin}">

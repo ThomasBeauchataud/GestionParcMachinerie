@@ -3,9 +3,13 @@ package models;
 import beans.entities.Client;
 import models.common.CommonDao;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@ApplicationScoped
+@Default
 public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
 
     @Override
