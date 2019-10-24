@@ -3,8 +3,12 @@ package managers;
 import beans.entities.Machine;
 import models.MachineDaoInterface;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 
+@ApplicationScoped
+@Default
 public class MachineManager implements MachineManagerInterface {
 
     @Inject
@@ -12,7 +16,7 @@ public class MachineManager implements MachineManagerInterface {
 
     @Override
     public Machine findMachineById(int id) {
-        return null;
+        return machineDao.getById(id);
     }
 
 }
