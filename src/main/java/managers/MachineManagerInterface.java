@@ -7,6 +7,18 @@ import java.util.List;
 public interface MachineManagerInterface {
 
     /**
+     *  Delete a machine in the database
+     * @param machine Machine
+     */
+    void deleteMachine(Machine machine);
+
+    /**
+     * Edit a machine in the database
+     * @param machine Machine
+     */
+    void editMachine(Machine machine);
+
+    /**
      * Create a machine in the database
      * @param machine Machine
      */

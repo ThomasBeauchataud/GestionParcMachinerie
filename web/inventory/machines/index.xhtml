@@ -36,6 +36,12 @@
                     <h:outputText value="#{machine.rentPrice}"/>
                 </p:column>
 
+                <p:column headerText="" style="width: 63px; text-align: center;">
+                    <h:form class="" style="margin: 0px;">
+                        <p:commandButton id="edit" type="submit" action="#{machineModification.edit(machine.id)}" value="Edit" ajax="false"/>
+                    </h:form>
+                </p:column>
+
             </p:dataTable>
         </div>
     </div>

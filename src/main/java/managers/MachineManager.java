@@ -17,6 +17,15 @@ public class MachineManager implements MachineManagerInterface {
     private MachineDaoInterface machineDao;
 
     @Override
+    public void editMachine(Machine machine) {machineDao.update(machine);
+    }
+
+    @Override
+    public void deleteMachine(Machine machine) {
+        machineDao.deleteById(machine.getId());
+    }
+
+    @Override
     public void createMachine(Machine machine) {
         machineDao.insert(machine);
     }
