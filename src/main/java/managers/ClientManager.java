@@ -24,4 +24,9 @@ public class ClientManager implements ClientManagerInterface {
         return clientDao.getById(id);
     }
 
+    @Override
+    public Client findClientByEmail(String email) {
+        return clientDao.getByEmail(email);
+    }
+
 }

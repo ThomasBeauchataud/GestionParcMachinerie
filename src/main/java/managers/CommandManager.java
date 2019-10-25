@@ -31,8 +31,10 @@ public class CommandManager implements CommandManagerInterface {
     }
 
     @Override
-    public void createCommand(Command command) {
-
+    public void createCommands(List<Command> commands) {
+        for(Command command : commands) {
+            commandDao.insert(command);
+        }
     }
 
     @Override

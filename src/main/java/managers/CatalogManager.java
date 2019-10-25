@@ -1,5 +1,6 @@
 package managers;
 
+import beans.entities.Client;
 import beans.entities.Command;
 import beans.entities.Machine;
 import beans.entities.internal.MachineCatalog;
@@ -20,32 +21,22 @@ public class CatalogManager implements CatalogManagerInterface {
     private MachineManagerInterface machineManager;
     @Inject
     private CommandManagerInterface commandManager;
+    @Inject
+    private ClientManagerInterface clientManager;
 
     private List<MachineCatalog> machineCatalogList;
-    private List<Machine> machines;
-    private List<Command> commands;
 
     @Override
     public List<MachineCatalog> findMachineCatalog() {
-        if(machineCatalogList == null || machines == null || commands == null) {
-            this.loadMachineCatalog();
-        }
         return machineCatalogList;
     }
 
     @Override
     public void loadMachineCatalog() {
-        machines = machineManager.findAllMachines();
-        commands = commandManager.findFutureCommands();
+        List<Machine> machines = machineManager.findAllMachines();
+        List<Command> commands = commandManager.findFutureCommands();
         List<MachineCatalog> machineCatalogs = new ArrayList<>();
         for(Machine machine : machines) {
-            boolean existingModel = false;
-            for(MachineCatalog machineCatalog : machineCatalogs) {
-                if(machine.getModel().equals(machineCatalog.getModel())) {
-                    existingModel = true;
-                    break;
-                }
-            }
             List<Date> dateList = new ArrayList<>();
             List<Niche> nicheList = new ArrayList<>();
             Niche firstNiche = new Niche();
@@ -72,19 +63,18 @@ public class CatalogManager implements CatalogManagerInterface {
             Niche niche = nicheList.get(nicheList.size()-1);
             niche.setTo(null);
             nicheList.set(nicheList.size()-1, niche);
-            if(existingModel) {
-                for(int i = 0 ; i < machineCatalogs.size() ; i++) {
-                    MachineCatalog machineCatalog = machineCatalogs.get(i);
-                    if(machine.getModel().equals(machineCatalog.getModel())) {
-                        machineCatalog.addSlots(nicheList);
-                        machineCatalogs.set(i, machineCatalog);
-                        break;
-                    }
-                }
-            } else {
-                machineCatalogs.add(new MachineCatalog(machine.getModel(), nicheList));
-            }
+            machineCatalogs.add(new MachineCatalog(machine.getId(), machine.getModel(), nicheList));
         }
         this.machineCatalogList = machineCatalogs;
+    }
+
+    @Override
+    public List<Command> generateCommandsWithCatalogs(List<MachineCatalog> machineCatalogList, String clientEmail) {
+        List<Command> commandList = new ArrayList<>();
+        Client client = clientManager.findClientByEmail(clientEmail);
+        for(MachineCatalog machineCatalog : machineCatalogList) {
+            commandList.add(new Command(machineCatalog, client, machineCatalog.getSelectNiche().getFrom(), machineCatalog.getSelectNiche().getTo()));
+        }
+        return commandList;
     }
 }

@@ -13,7 +13,62 @@
         <ui:include src="/authenticated-header.xhtml" />
     </header>
 
-    <p:outputLabel value="Basket"/>
+    <!-- Client Header -->
+
+    <h:form id="form-client">
+        <h:outputText id="message" value="Client Email: (#{commandCreation.emailMessage})" /><br/>
+        <p:inputText id="email" value="#{commandCreation.clientEmail}">
+            <p:ajax event="keyup" update="message" listener="#{commandCreation.findUserByEmail()}" />
+        </p:inputText><br/><br/>
+        <p:commandButton type="submit" id="execute" action="#{commandCreation.execute()}" value="Confirm" ajax="false"/>
+    </h:form><br/><br/>
+
+    <!-- Catalog Header -->
+
+    <h:form id="form-catalog">
+        <h:outputLabel for="from" value="From: "/>
+        <p:calendar id="from" value="#{commandCreation.from}">
+            <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+        </p:calendar><br/>
+
+        <h:outputLabel for="to" value="To: "/>
+        <p:calendar id="to" value="#{commandCreation.to}">
+            <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+        </p:calendar><br/>
+
+        <p:outputPanel style="horiz-align: right; display: inline-block;">
+            <h:outputLabel for="search" value="Machine Catalog Search: " />
+            <p:inputText id="search" value="#{commandCreation.filterValue}">
+                <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
+            </p:inputText>
+        </p:outputPanel>
+    </h:form>
+
+    <!-- Catalog -->
+
+    <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="6" layout="grid"
+                rows="12" paginator="true" id="grid"
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+        <f:facet name="header">
+            <p:outputLabel value="Machine Catalog"/>
+        </f:facet>
+
+        <p:panel header="#{machineCatalog.model}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+
+                <img src="#{navigationController.applicationUrl}css/images/#{commandCreation.getImageName(machineCatalog)}" alt=""/>
+                <h:form id="form">
+                    <p:commandButton id="ajax" update="table grid" action="#{commandCreation.add(machineCatalog)}" value="Add"/>
+                </h:form>
+
+            </h:panelGrid>
+        </p:panel>
+
+    </p:dataGrid><br/><br/><br/>
+
+    <!-- Basket -->
+
     <div class="datatable">
         <p:dataTable var="machineCatalog" id="table" value="#{commandCreation.basket}">
             <f:facet name="header">
@@ -24,60 +79,16 @@
                 <h:outputText value="#{machineCatalog.model}" />
             </p:column>
 
-            <p:column headerText="Count">
-                <h:outputText value="#{machineCatalog.number}" />
-            </p:column>
-
             <p:column headerText="From">
-                <h:outputText value="#{machineCatalog.from}" />
+                <h:outputText value="#{machineCatalog.selectNiche.from}" />
             </p:column>
 
             <p:column headerText="To">
-                <h:outputText value="#{machineCatalog.to}" />
+                <h:outputText value="#{machineCatalog.selectNiche.to}" />
             </p:column>
 
         </p:dataTable>
-    </div><br/><br/>
-
-    <h:form id="search">
-        <p:outputPanel style="horiz-align: right; display: inline-block;">
-            <h:outputText value="Machine Catalog Search: " />
-            <p:inputText value="#{commandCreation.filterValue}">
-                <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
-            </p:inputText>
-        </p:outputPanel>
-    </h:form>
-
-        <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="6" layout="grid"
-                    rows="12" paginator="true" id="grid"
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-
-            <f:facet name="header">
-                <p:outputLabel value="Machine Catalog"/>
-            </f:facet>
-
-
-            <p:panel header="#{machineCatalog.model}" style="text-align:center"><h:form id="form">
-                <h:panelGrid columns="1" style="width:100%">
-
-                    <h:outputText value="Count: (Max = #{commandCreation.maxValue(machineCatalog)})"/>
-                    <p:inputNumber id="count" value="#{commandCreation.count}" minValue="0" maxValue="#{commandCreation.maxValue(machineCatalog)}" required="true"/>
-
-                    <h:outputText value="From: "/>
-                    <p:calendar id="from" value="#{commandCreation.from}" required="true">
-                        <p:ajax event="dateSelect" update="count"/>
-                    </p:calendar>
-
-                    <h:outputText value="To: "/>
-                    <p:calendar id="to" value="#{commandCreation.to}" required="true"/>
-
-                    <p:commandButton id="ajax" update="table" action="#{commandCreation.add(machineCatalog)}" value="Add"/>
-
-                </h:panelGrid></h:form>
-            </p:panel>
-        </p:dataGrid><br/>
-
-        <p:commandButton type="submit" id="execute" action="#{commandCreation.execute()}" value="Confirm"/>
+    </div>
 
 </h:body>
 </html>

@@ -13,4 +13,11 @@ public interface ClientManagerInterface {
      */
     Client findClientById(int id);
 
+    /**
+     * Return a Client from the database identified by his email
+     * @param email String
+     * @return Client
+     */
+    Client findClientByEmail(String email);
+
 }
