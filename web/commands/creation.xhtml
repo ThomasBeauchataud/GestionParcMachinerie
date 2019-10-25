@@ -37,23 +37,23 @@
             </p:column>
 
         </p:dataTable>
-    </div><br/>
+    </div><br/><br/>
 
-    <p:outputLabel value="Machine Catalog"/><br/>
+    <h:form id="search">
+        <p:outputPanel style="horiz-align: right; display: inline-block;">
+            <h:outputText value="Machine Catalog Search: " />
+            <p:inputText value="#{commandCreation.filterValue}">
+                <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
+            </p:inputText>
+        </p:outputPanel>
+    </h:form>
 
-
-        <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="5" layout="grid"
+        <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="6" layout="grid"
                     rows="12" paginator="true" id="grid"
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                    rowsPerPageTemplate="6,12,16">
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 
             <f:facet name="header">
-                <p:outputPanel style="horiz-align: right; display: inline-block;">
-                    <h:outputText value="Search: " />
-                    <p:inputText value="#{commandCreation.filterValue}">
-                        <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
-                    </p:inputText>
-                </p:outputPanel>
+                <p:outputLabel value="Machine Catalog"/>
             </f:facet>
 
 
