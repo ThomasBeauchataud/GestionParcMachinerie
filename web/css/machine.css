@@ -1,0 +1,41 @@
+.machine-form-wrapper
+{
+    text-align: center;
+}
+
+.machine-form
+{
+    border-radius: 25px;
+    display: inline-block;
+    border: 2px solid gray;
+    padding-bottom: 10px;
+}
+
+.machine-datatable
+{
+    display: inline-block;
+    min-width: 900px;
+    width: 80%;
+}
+
+.machine-creation-button-datable
+{
+    text-align: left !important;
+}
+
+
+.machine-form-title
+{
+    text-align: center;
+    background-color: lightgray;
+    width: 100%;
+    padding-top: 50px;
+    top: 0;
+    left: 0;
+    display: block;
+    padding-bottom: 39px;
+    font-family: JosefinSans-Bold;
+    font-size: 24px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
