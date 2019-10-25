@@ -3,6 +3,7 @@ package models;
 import beans.entities.Client;
 import beans.entities.Command;
 import beans.entities.Machine;
+import beans.entities.enums.CommandStatus;
 import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -21,7 +22,16 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
 
     @Override
     public void insert(Command object) {
-
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insert);
+            preparedStatement.setInt(1, object.getClient().getId());
+            preparedStatement.setInt(2, object.getMachine().getId());
+            preparedStatement.setLong(3, object.getFrom().getTime());
+            preparedStatement.setLong(4, object.getTo().getTime());
+            preparedStatement.execute();
+        } catch (Exception e) {
+            log(e.getMessage());
+        }
     }
 
     @Override
@@ -66,13 +76,15 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
                 new Machine(resultSet.getInt("machine_id")),
                 new Client(resultSet.getInt("client_id")),
                 new Date(resultSet.getLong("from")),
-                new Date(resultSet.getLong("to"))
+                new Date(resultSet.getLong("to")),
+                CommandStatus.valueOf(resultSet.getString("status"))
         );
     }
 
     private static final String select = "SELECT * FROM command";
     private static final String selectById = "SELECT * FROM command WHERE id = ?";
     private static final String selectUpFrom = "SELECT * FROM command WHERE `from` > ?";
+    private static final String insert = "INSERT INTO command (client_id, machine_id, `from`, `to`) VALUES (?, ?, ?, ?)";
     private static final String deleteById = "DELETE FROM command WHERE id = ?";
 
 }

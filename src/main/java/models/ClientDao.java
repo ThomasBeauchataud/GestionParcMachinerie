@@ -5,6 +5,7 @@ import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -34,8 +35,17 @@ public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
     }
 
     @Override
-    public Client getByName(String name) {
-        return null;
+    public Client getByEmail(String email) {
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectByEmail);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return this.generateEntity(resultSet);
+        } catch (Exception e) {
+            log(e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -55,6 +65,7 @@ public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
 
     private static final String select = "SELECT * FROM client";
     private static final String selectById = "SELECT * FROM client WHERE id = ?";
+    private static final String selectByEmail = "SELECT * FROM client WHERE email = ?";
     private static final String deleteById = "DELETE FROM client WHERE id = ?";
 
 }

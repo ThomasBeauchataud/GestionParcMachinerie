@@ -1,9 +1,13 @@
 package beans;
 
 import beans.common.NavigationController;
+import beans.entities.Client;
 import beans.entities.Command;
 import beans.entities.internal.MachineCatalog;
+import beans.entities.internal.Niche;
+import managers.BillManagerInterface;
 import managers.CatalogManagerInterface;
+import managers.ClientManagerInterface;
 import managers.CommandManagerInterface;
 
 import javax.annotation.PostConstruct;
@@ -12,12 +16,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Named
 @SessionScoped
-public class CommandCreation extends Command implements Serializable {
+public class CommandCreation implements Serializable {
 
+    @Inject
+    private ClientManagerInterface clientManager;
+    @Inject
+    private BillManagerInterface billManager;
     @Inject
     private CommandManagerInterface commandManager;
     @Inject
@@ -29,12 +38,15 @@ public class CommandCreation extends Command implements Serializable {
     private List<MachineCatalog> machineCatalogFiltered;
     private List<MachineCatalog> basket;
     private String filterValue;
-    private int count;
+    private Date from;
+    private Date to;
+    private String clientEmail;
+    private String emailMessage = "This email is not associated to any client";
 
     @PostConstruct
     public void init() {
+        catalogManager.loadMachineCatalog();
         machineCatalog = catalogManager.findMachineCatalog();
-        machineCatalogFiltered = machineCatalog;
         basket = new ArrayList<>();
     }
 
@@ -62,40 +74,80 @@ public class CommandCreation extends Command implements Serializable {
         this.filterValue = filterValue;
     }
 
-    public int getCount() {
-        return count;
+    public Date getFrom() {
+        return from;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setFrom(Date from) {
+        this.from = from;
+    }
+
+    public Date getTo() {
+        return to;
+    }
+
+    public void setTo(Date to) {
+        this.to = to;
+    }
+
+    public String getClientEmail() {
+        return clientEmail;
+    }
+
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
+    }
+
+    public String getEmailMessage() {
+        return emailMessage;
+    }
+
+    public void setEmailMessage(String emailMessage) {
+        this.emailMessage = emailMessage;
     }
 
     public void add(MachineCatalog machineCatalog) {
-        machineCatalog.setFrom(getFrom());
-        machineCatalog.setTo(getTo());
-        machineCatalog.setNumber(count);
+        machineCatalog.setSelectNiche(new Niche(from, to));
         basket.add(machineCatalog);
+        this.machineCatalog.remove(machineCatalog);
+        this.filter();
     }
 
     public String execute() {
+        List<Command> commands = catalogManager.generateCommandsWithCatalogs(basket, clientEmail);
+        commandManager.createCommands(commands);
+        billManager.generateBill(commands, clientEmail);
+        this.init();
         return navigationController.goToCommands();
     }
 
     public void filter() {
-        machineCatalogFiltered = new ArrayList<>();
-        if(filterValue != null && !filterValue.equals("")) {
-            for(MachineCatalog machine : machineCatalog) {
-                if(machine.getModel().contains(filterValue)) {
-                    machineCatalogFiltered.add(machine);
+        if(from != null && to != null) {
+            machineCatalogFiltered = new ArrayList<>();
+            if (filterValue != null && !filterValue.equals("")) {
+                for (MachineCatalog machine : machineCatalog) {
+                    if (machine.getModel().contains(filterValue)) {
+                        machineCatalogFiltered.add(machine);
+                    }
                 }
+            } else {
+                machineCatalogFiltered = machineCatalog;
             }
-        } else {
-            machineCatalogFiltered = machineCatalog;
         }
     }
 
-    public int maxValue(MachineCatalog machineCatalog) {
-        return machineCatalog.getCount(getFrom(), getTo());
+    public void findUserByEmail() {
+        Client client = clientManager.findClientByEmail(clientEmail);
+        if(client == null) {
+            emailMessage = "This email is not associated to any client";
+        } else {
+            emailMessage = "Client found: " + client.getSurname() + " " + client.getName();
+        }
+    }
+
+    public String getImageName(MachineCatalog machineCatalog) {
+        String[] temp = machineCatalog.getModel().split(" ");
+        return temp[0] + "-" + temp[1] + ".png";
     }
 
 }

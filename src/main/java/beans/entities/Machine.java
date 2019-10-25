@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class Machine implements Serializable {
 
     private int id;
-    private String family;
     private String model;
     private int rentPrice;
 
@@ -19,9 +18,8 @@ public class Machine implements Serializable {
         this.model = model;
     }
 
-    public Machine(int id, String family, String model, int rentPrice) {
+    public Machine(int id, String model, int rentPrice) {
         this.id = id;
-        this.family = family;
         this.model = model;
         this.rentPrice = rentPrice;
     }
@@ -32,14 +30,6 @@ public class Machine implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getFamily() {
-        return family;
-    }
-
-    public void setFamily(String family) {
-        this.family = family;
     }
 
     public String getModel() {
