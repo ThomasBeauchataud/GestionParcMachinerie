@@ -39,7 +39,6 @@ public class MachineModification extends Machine implements Serializable {
 
     public void Clone(Machine machine)
     {
-        this.setFamily(machine.getFamily());
         this.setId(machine.getId());
         this.setModel(machine.getModel());
         this.setRentPrice(machine.getRentPrice());

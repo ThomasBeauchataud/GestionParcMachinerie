@@ -21,7 +21,7 @@
                 <h:outputText value="Model: "/>
                 <p:inputText value="#{machineCreation.model}" required="true"/>
                 <h:outputText value="Rent price: "/>
-                <p:inputNumber value="#{machineCreation.rentPrice}" required="true"/>
+                <p:inputNumber value="#{machineCreation.rentPrice}" required="true" decimalPlaces="0" symbol=" CAD/day" symbolPosition="s"/>
                 <p:commandButton id="submit" type="submit" action="#{machineCreation.execute()}" value="Create" ajax="false"/>
             </h:panelGrid>
         </h:form>

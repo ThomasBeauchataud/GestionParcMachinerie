@@ -27,7 +27,6 @@ public class MachineCreation extends Machine implements Serializable {
     private void ResetMachine()
     {
         this.setId(0);
-        this.setFamily("");
         this.setModel("");
         this.setRentPrice(0);
     }
