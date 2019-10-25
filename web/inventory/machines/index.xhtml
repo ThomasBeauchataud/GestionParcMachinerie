@@ -5,38 +5,43 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/machine.css"/>
 </h:head>
 <h:body>
     <header>
         <ui:include src="/authenticated-header.xhtml" />
     </header>
 
-    <h:form>
-        <p:commandButton id="create" type="submit" action="#{navigationController.goToMachineCreation()}" value="Create New Machine" ajax="false"/>
-    </h:form>
 
-    <div class="datatable">
-        <p:dataTable var="machine" value="#{machineView.commandList}">
-            <f:facet name="header">
-                Machine Inventory
-            </f:facet>
-            <p:column headerText="Id">
-                <h:outputText value="#{machine.id}" />
-            </p:column>
+    <div class="machine-form-wrapper">
+        <div class="machine-datatable machine-creation-button-datable">
+            <h:form class="">
+                <p:commandButton id="create" type="submit" action="#{navigationController.goToMachineCreation()}" value="Create New Machine" ajax="false"/>
+            </h:form>
+        </div>
+        <div class="datatable machine-datatable">
+            <p:dataTable var="machine" value="#{machineView.commandList}">
+                <f:facet name="header">
+                    Machine Inventory
+                </f:facet>
+                <p:column headerText="Id" style="width: 55px; text-align: center;">
+                    <h:outputText value="#{machine.id}" />
+                </p:column>
 
-            <p:column headerText="Family">
-                <h:outputText value="#{machine.family}" />
-            </p:column>
+                <p:column headerText="Family">
+                    <h:outputText value="#{machine.family}" />
+                </p:column>
 
-            <p:column headerText="Model">
-                <h:outputText value="#{machine.model}" />
-            </p:column>
+                <p:column headerText="Model">
+                    <h:outputText value="#{machine.model}" />
+                </p:column>
 
-            <p:column headerText="Rent Price">
-                <h:outputText value="#{machine.rentPrice}" />
-            </p:column>
+                <p:column headerText="Rent Price" style="width: 100px; text-align: center;">
+                    <h:outputText value="#{machine.rentPrice}"/>
+                </p:column>
 
-        </p:dataTable>
+            </p:dataTable>
+        </div>
     </div>
 
 </h:body>

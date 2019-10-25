@@ -12,20 +12,19 @@
     <header>
         <ui:include src="/authenticated-header.xhtml" />
     </header>
-
-    <h:outputLabel>
-        Machine Creation Form :
-    </h:outputLabel>
-
-    <h:form>
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputText value="Model: "/>
-            <p:inputText value="#{machineCreation.model}" required="true"/>
-            <h:outputText value="Rent price: "/>
-            <p:inputNumber value="#{machineCreation.rentPrice}" required="true"/>
-            <p:commandButton id="submit" type="submit" action="#{machineCreation.execute()}" value="Create" ajax="false"/>
-        </h:panelGrid>
-    </h:form>
-
+    <div class="machine-form-wrapper">
+        <h:form class="machine-form">
+            <h:outputLabel class="machine-form-title">
+                Machine Creation Form
+            </h:outputLabel>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="Model: "/>
+                <p:inputText value="#{machineCreation.model}" required="true"/>
+                <h:outputText value="Rent price: "/>
+                <p:inputNumber value="#{machineCreation.rentPrice}" required="true"/>
+                <p:commandButton id="submit" type="submit" action="#{machineCreation.execute()}" value="Create" ajax="false"/>
+            </h:panelGrid>
+        </h:form>
+    </div>
 </h:body>
 </html>
