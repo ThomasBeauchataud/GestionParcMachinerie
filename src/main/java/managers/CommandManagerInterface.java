@@ -2,6 +2,8 @@ package managers;
 
 import beans.entities.Command;
 
+import java.util.List;
+
 public interface CommandManagerInterface {
 
     /**
@@ -15,5 +17,11 @@ public interface CommandManagerInterface {
      * @param command Command
      */
     void createCommand(Command command);
+
+    /**
+     * Return all future commands
+     * @return List<Command>
+     */
+    List<Command> findFutureCommands();
 
 }

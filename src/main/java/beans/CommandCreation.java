@@ -27,14 +27,15 @@ public class CommandCreation extends Command implements Serializable {
 
     private List<MachineCatalog> machineCatalog;
     private List<MachineCatalog> machineCatalogFiltered;
-    private List<Command> basket;
-    private int count;
+    private List<MachineCatalog> basket;
     private String filterValue;
+    private int count;
 
     @PostConstruct
     public void init() {
         machineCatalog = catalogManager.findMachineCatalog();
         machineCatalogFiltered = machineCatalog;
+        basket = new ArrayList<>();
     }
 
     public List<MachineCatalog> getMachineCatalogFiltered() {
@@ -45,12 +46,12 @@ public class CommandCreation extends Command implements Serializable {
         this.machineCatalogFiltered = machineCatalogFiltered;
     }
 
-    public int getCount() {
-        return count;
+    public List<MachineCatalog> getBasket() {
+        return basket;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setBasket(List<MachineCatalog> basket) {
+        this.basket = basket;
     }
 
     public String getFilterValue() {
@@ -61,12 +62,22 @@ public class CommandCreation extends Command implements Serializable {
         this.filterValue = filterValue;
     }
 
-    public void add(String model) {
+    public int getCount() {
+        return count;
+    }
 
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void add(MachineCatalog machineCatalog) {
+        machineCatalog.setFrom(getFrom());
+        machineCatalog.setTo(getTo());
+        machineCatalog.setNumber(count);
+        basket.add(machineCatalog);
     }
 
     public String execute() {
-        commandManager.createCommand(this);
         return navigationController.goToCommands();
     }
 
@@ -81,6 +92,10 @@ public class CommandCreation extends Command implements Serializable {
         } else {
             machineCatalogFiltered = machineCatalog;
         }
+    }
+
+    public int maxValue(MachineCatalog machineCatalog) {
+        return machineCatalog.getCount(getFrom(), getTo());
     }
 
 }

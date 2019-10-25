@@ -13,10 +13,36 @@
         <ui:include src="/authenticated-header.xhtml" />
     </header>
 
-    Machine Catalog<br/>
-    <h:form id="form">
+    <p:outputLabel value="Basket"/>
+    <div class="datatable">
+        <p:dataTable var="machineCatalog" id="table" value="#{commandCreation.basket}">
+            <f:facet name="header">
+                Command List
+            </f:facet>
 
-        <p:dataGrid var="machine" value="#{commandCreation.machineCatalogFiltered}" columns="5" layout="grid"
+            <p:column headerText="Model">
+                <h:outputText value="#{machineCatalog.model}" />
+            </p:column>
+
+            <p:column headerText="Count">
+                <h:outputText value="#{machineCatalog.number}" />
+            </p:column>
+
+            <p:column headerText="From">
+                <h:outputText value="#{machineCatalog.from}" />
+            </p:column>
+
+            <p:column headerText="To">
+                <h:outputText value="#{machineCatalog.to}" />
+            </p:column>
+
+        </p:dataTable>
+    </div><br/>
+
+    <p:outputLabel value="Machine Catalog"/><br/>
+
+
+        <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="5" layout="grid"
                     rows="12" paginator="true" id="grid"
                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                     rowsPerPageTemplate="6,12,16">
@@ -30,26 +56,28 @@
                 </p:outputPanel>
             </f:facet>
 
-            <p:panel header="#{machine.model}" style="text-align:center">
+
+            <p:panel header="#{machineCatalog.model}" style="text-align:center"><h:form id="form">
                 <h:panelGrid columns="1" style="width:100%">
 
-                    <h:outputText value="Count: "/>
-                    <p:inputNumber id="places" value="#{commandCreation.count}" minValue="1" required="true"/>
+                    <h:outputText value="Count: (Max = #{commandCreation.maxValue(machineCatalog)})"/>
+                    <p:inputNumber id="count" value="#{commandCreation.count}" minValue="0" maxValue="#{commandCreation.maxValue(machineCatalog)}" required="true"/>
 
                     <h:outputText value="From: "/>
-                    <p:calendar id="from" value="#{commandCreation.from}" required="true"/>
+                    <p:calendar id="from" value="#{commandCreation.from}" required="true">
+                        <p:ajax event="dateSelect" update="count"/>
+                    </p:calendar>
 
                     <h:outputText value="To: "/>
                     <p:calendar id="to" value="#{commandCreation.to}" required="true"/>
-                    <p:commandButton type="submit" id="add" action="#{commandCreation.add(machine.model)}" value="Add" ajax="true"/>
 
-                </h:panelGrid>
+                    <p:commandButton id="ajax" update="table" action="#{commandCreation.add(machineCatalog)}" value="Add"/>
+
+                </h:panelGrid></h:form>
             </p:panel>
         </p:dataGrid><br/>
 
         <p:commandButton type="submit" id="execute" action="#{commandCreation.execute()}" value="Confirm"/>
-
-    </h:form>
 
 </h:body>
 </html>

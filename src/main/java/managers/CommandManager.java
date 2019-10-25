@@ -35,6 +35,16 @@ public class CommandManager implements CommandManagerInterface {
 
     }
 
+    @Override
+    public List<Command> findFutureCommands() {
+        List<Command> commands = commandDao.getFuture();
+        List<Command> finalCommandList = new ArrayList<>();
+        for(Command command : commands) {
+            finalCommandList.add(this.enrichCommand(command));
+        }
+        return finalCommandList;
+    }
+
     private Command enrichCommand(Command command) {
         command.setClient(clientManager.findClientById(command.getClient().getId()));
         command.setMachine(machineManager.findMachineById(command.getMachine().getId()));

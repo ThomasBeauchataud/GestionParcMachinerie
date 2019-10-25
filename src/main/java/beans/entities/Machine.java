@@ -15,6 +15,10 @@ public class Machine implements Serializable {
         this.id = id;
     }
 
+    public Machine(String model) {
+        this.model = model;
+    }
+
     public Machine(int id, String family, String model, int rentPrice) {
         this.id = id;
         this.family = family;

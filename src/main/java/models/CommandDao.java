@@ -7,9 +7,12 @@ import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Default
 @ApplicationScoped
@@ -42,6 +45,21 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
     }
 
     @Override
+    public List<Command> getFuture() {
+        List<Command> list = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectUpFrom);
+            preparedStatement.setLong(1, new Date().getTime());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            list.add(this.generateEntity(resultSet));
+        } catch (Exception e) {
+            log(e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
     protected Command generateEntity(ResultSet resultSet) throws SQLException {
         return new Command(
                 resultSet.getInt("id"),
@@ -54,6 +72,7 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
 
     private static final String select = "SELECT * FROM command";
     private static final String selectById = "SELECT * FROM command WHERE id = ?";
+    private static final String selectUpFrom = "SELECT * FROM command WHERE `from` > ?";
     private static final String deleteById = "DELETE FROM command WHERE id = ?";
 
 }
