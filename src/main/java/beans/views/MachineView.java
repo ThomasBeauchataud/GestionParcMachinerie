@@ -1,14 +1,15 @@
 package beans.views;
 
 import beans.entities.Command;
+import beans.entities.Machine;
 import managers.CommandManagerInterface;
+import managers.MachineManagerInterface;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,13 +19,17 @@ public class MachineView implements Serializable {
 
     @Inject
     private CommandManagerInterface commandManager;
+    @Inject
+    private MachineManagerInterface machineManager;
 
     private List<Command> commandList;
+    private Machine machine;
 
     @PostConstruct
     public void init() {
         int id = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id"));
-        commandList = commandManager.findByMachineId(id);
+        commandList = commandManager.filterByDate(commandManager.findByMachineId(id));
+        machine = machineManager.findMachineById(id);
     }
 
     public List<Command> getCommandList() {
@@ -33,6 +38,14 @@ public class MachineView implements Serializable {
 
     public void setCommandList(List<Command> commandList) {
         this.commandList = commandList;
+    }
+
+    public Machine getMachine() {
+        return machine;
+    }
+
+    public void setMachine(Machine machine) {
+        this.machine = machine;
     }
 
 }

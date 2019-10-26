@@ -60,4 +60,8 @@ public class NavigationController implements Serializable {
         return "/inventory/machines/index.xhtml?faces-redirect=true";
     }
 
+    public String goToMachineDetail(int id) {
+        return "/inventory/machines/consultation.xhtml?faces-redirect=true&id="+id;
+    }
+
 }

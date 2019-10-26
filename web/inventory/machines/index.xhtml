@@ -38,6 +38,7 @@
 
                 <p:column headerText="" style="width: 63px; text-align: center;">
                     <h:form class="" style="margin: 0px;">
+                        <p:commandButton id="details" type="submit" action="#{navigationController.goToMachineDetail(machine.id)}" value="Details" ajax="false"/>
                         <p:commandButton id="edit" type="submit" action="#{machineModification.edit(machine.id)}" value="Edit" ajax="false"/>
                     </h:form>
                 </p:column>

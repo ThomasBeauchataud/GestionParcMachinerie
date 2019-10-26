@@ -57,6 +57,20 @@ public class CommandManager implements CommandManagerInterface {
     }
 
     @Override
+    public List<Command> filterByDate(List<Command> commands) {
+        for(int i = 0 ; i < commands.size() - 1 ; i++) {
+            for(int k = 0 ; k < commands.size() - i - 1 ; k++) {
+                if(commands.get(i).getFrom().after(commands.get(i+1).getFrom())) {
+                    Command command = commands.get(i);
+                    commands.set(i, commands.get(i+1));
+                    commands.set(i+1, command);
+                }
+            }
+        }
+        return commands;
+    }
+
+    @Override
     public List<Command> findFutureCommands() {
         List<Command> commands = commandDao.getFuture();
         List<Command> finalCommandList = new ArrayList<>();

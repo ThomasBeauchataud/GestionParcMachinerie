@@ -38,4 +38,11 @@ public interface CommandManagerInterface {
      */
     List<Command> findByMachineId(int id);
 
+    /**
+     * Filter Commands by Date
+     * @param commandList List<Command>
+     * @return List<Command>
+     */
+    List<Command> filterByDate(List<Command> commandList);
+
 }
