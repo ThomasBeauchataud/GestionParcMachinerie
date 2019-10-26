@@ -20,7 +20,16 @@ public class ClientCreation extends Client implements Serializable {
 
     public String execute() {
         clientManager.createClient(this);
+        this.Reset();
         return navigationController.goToClients();
+    }
+
+    private void Reset()
+    {
+        this.setId(0);
+        this.setEmail("");
+        this.setName("");
+        this.setSurname("");
     }
 
 }

@@ -6,19 +6,22 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/home.css"/>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/machine.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
 </h:head>
 <h:body>
 
     <header>
         <ui:include src="/authenticated-header.xhtml" />
     </header>
-    <div class="machine-form-wrapper">
-        <h:form class="machine-form">
-            <h:outputLabel class="machine-form-title">
+
+    <div class="form-wrapper">
+        <h:form class="creation-form">
+            <h:outputLabel class="creation-form-title">
                 Machine Modification Form
             </h:outputLabel>
             <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="Model: " />
+                <p:inputText value="#{machineModification.model}" required="true"/>
                 <h:outputText value="Rent price: " />
                 <p:inputNumber value="#{machineModification.rentPrice}" required="true" decimalPlaces="0" symbol=" CAD/day" symbolPosition="s"/>
                 <p:commandButton id="edit" type="submit" action="#{machineModification.Edit()}" value="Edit" ajax="false"/>

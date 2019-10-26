@@ -5,21 +5,21 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
-    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/machine.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
 </h:head>
 <h:body>
+
     <header>
         <ui:include src="/authenticated-header.xhtml" />
     </header>
 
-
-    <div class="machine-form-wrapper">
-        <div class="machine-datatable machine-creation-button-datable">
+    <div class="form-wrapper">
+        <div class="management-datatable management-creation-button-datatable">
             <h:form class="">
                 <p:commandButton id="create" type="submit" action="#{navigationController.goToMachineCreation()}" value="Create New Machine" ajax="false"/>
             </h:form>
         </div>
-        <div class="datatable machine-datatable">
+        <div class="datatable management-datatable">
             <p:dataTable var="machine" value="#{machineView.machineList}">
                 <f:facet name="header">
                     Machine Inventory

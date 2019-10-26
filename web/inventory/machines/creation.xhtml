@@ -6,15 +6,17 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/home.css"/>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
 </h:head>
 <h:body>
 
     <header>
         <ui:include src="/authenticated-header.xhtml" />
     </header>
-    <div class="machine-form-wrapper">
-        <h:form class="machine-form">
-            <h:outputLabel class="machine-form-title">
+
+    <div class="form-wrapper">
+        <h:form class="creation-form">
+            <h:outputLabel class="creation-form-title">
                 Machine Creation Form
             </h:outputLabel>
             <h:panelGrid columns="2" cellpadding="5">

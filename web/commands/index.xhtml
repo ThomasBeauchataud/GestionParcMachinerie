@@ -11,40 +11,42 @@
         <ui:include src="/authenticated-header.xhtml" />
     </header>
 
-    <h:form>
-        <p:commandButton id="create" type="submit" action="#{navigationController.goToCommandCreation()}" value="Create New Command" ajax="false"/>
-    </h:form>
+    <div class="form-wrapper">
+        <h:form class="management-datatable management-creation-button-datatable">
+            <p:commandButton id="create" type="submit" action="#{navigationController.goToCommandCreation()}" value="Create New Command" ajax="false"/>
+        </h:form>
 
-    <div class="datatable">
-        <p:dataTable var="command" value="#{commandsView.commandList}">
-            <f:facet name="header">
-                Command List
-            </f:facet>
-            <p:column headerText="Id">
-                <h:outputText value="#{command.id}" />
-            </p:column>
+        <div class="datatable management-datatable">
+            <p:dataTable var="command" value="#{commandsView.commandList}">
+                <f:facet name="header">
+                    Command List
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{command.id}" />
+                </p:column>
 
-            <p:column headerText="Client Email">
-                <h:outputText value="#{command.client.email}" />
-            </p:column>
+                <p:column headerText="Client Email">
+                    <h:outputText value="#{command.client.email}" />
+                </p:column>
 
-            <p:column headerText="Machine">
-                <h:outputText value="#{command.machine.model}" />
-            </p:column>
+                <p:column headerText="Machine">
+                    <h:outputText value="#{command.machine.model}" />
+                </p:column>
 
-            <p:column headerText="From">
-                <h:outputText value="#{command.from}" />
-            </p:column>
+                <p:column headerText="From">
+                    <h:outputText value="#{command.from}" />
+                </p:column>
 
-            <p:column headerText="To">
-                <h:outputText value="#{command.to}" />
-            </p:column>
+                <p:column headerText="To">
+                    <h:outputText value="#{command.to}" />
+                </p:column>
 
-            <p:column headerText="Status">
-                <h:outputText value="#{command.commandStatus.name()}" />
-            </p:column>
+                <p:column headerText="Status">
+                    <h:outputText value="#{command.commandStatus.name()}" />
+                </p:column>
 
-        </p:dataTable>
+            </p:dataTable>
+        </div>
     </div>
 
 </h:body>
