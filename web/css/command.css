@@ -1,0 +1,26 @@
+.command-grid
+{
+    display: inline-block;
+    min-width: 900px;
+    width: 80%;
+}
+.command-submit-button-datatable
+{
+    margin-top: 1em;
+    text-align: right !important;
+}
+
+.command-form
+{
+    text-align: left !important;
+}
+
+.exclamation-circle
+{
+    color: red;
+}
+
+.check-circle
+{
+    color: green;
+}

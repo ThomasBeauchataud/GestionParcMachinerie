@@ -6,6 +6,9 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/home.css"/>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/command.css"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
 </h:head>
 <h:body>
 
@@ -14,87 +17,98 @@
     </header>
 
     <!-- Client Header -->
+    <div class ="form-wrapper">
+        <h:form id="form-client" class="command-grid">
+        </h:form>
 
-    <h:form id="form-client">
-        <h:outputText id="message" value="Client Email: (#{commandCreation.emailMessage})" /><br/>
-        <p:inputText id="email" value="#{commandCreation.clientEmail}">
-            <p:ajax event="keyup" update="message" listener="#{commandCreation.findUserByEmail()}" />
-        </p:inputText><br/><br/>
-        <p:commandButton type="submit" id="execute" action="#{commandCreation.execute()}" value="Confirm" ajax="false"/>
-    </h:form><br/><br/>
+        <!-- Catalog Header -->
 
-    <!-- Catalog Header -->
+        <h:form id="form-catalog" class="command-grid">
+            <h:panelGrid columns="3" cellpadding="5">
+                <h:outputText for="email" value="Client Email: " />
+                <p:inputText id="email" value="#{commandCreation.clientEmail}">
+                    <p:ajax event="keyup" update="message" listener="#{commandCreation.findUserByEmail()}" />
+                </p:inputText>
+                <h:outputText id="message" class="fa fa-#{commandCreation.emailStatus} #{commandCreation.emailStatus}" value=" #{commandCreation.emailMessage}" />
 
-    <h:form id="form-catalog">
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputLabel for="from" value="From: "/>
-            <p:calendar id="from" value="#{commandCreation.from}">
-                <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
-            </p:calendar>
+                <h:outputLabel for="from" value="From: "/>
+                <p:calendar id="from" value="#{commandCreation.from}">
+                    <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+                </p:calendar>
+                <h:outputText id="fromMessage" value="" />
 
-            <h:outputLabel for="to" value="To: "/>
-            <p:calendar id="to" value="#{commandCreation.to}">
-                <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
-            </p:calendar>
+                <h:outputLabel for="to" value="To: "/>
+                <p:calendar id="to" value="#{commandCreation.to}">
+                    <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+                </p:calendar>
+                <h:outputText id="toMessage" value="" />
 
-            <h:outputLabel for="search" value="Machine Catalog Search: " />
-            <p:inputText id="search" value="#{commandCreation.filterValue}">
-                <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
-            </p:inputText>
-        </h:panelGrid>
-    </h:form>
 
-    <!-- Catalog -->
-
-    <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="6" layout="grid"
-                rows="12" paginator="true" id="grid"
-                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-
-        <f:facet name="header">
-            <p:outputLabel value="Machine Catalog"/>
-        </f:facet>
-
-        <p:panel header="#{machineCatalog.model}" style="text-align:center">
-            <h:panelGrid columns="1" style="width:100%">
-
-                <img src="#{navigationController.applicationUrl}css/images/#{commandCreation.getImageName(machineCatalog)}" alt=""/>
-                <h:form id="form">
-                    <p:commandButton id="ajax" update="table grid" action="#{commandCreation.add(machineCatalog)}" value="Add"/>
-                </h:form>
-
+                <h:outputLabel for="search" value="Machine Catalog Search: " />
+                <p:inputText id="search" value="#{commandCreation.filterValue}">
+                    <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
+                </p:inputText>
+                <h:outputText id="searchMessage" value="" />
             </h:panelGrid>
-        </p:panel>
+        </h:form>
 
-    </p:dataGrid><br/><br/><br/>
+        <!-- Catalog -->
+        <div class="command-grid">
+            <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="6" layout="grid"
+                        rows="12" paginator="true" id="grid"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 
-    <!-- Basket -->
+                <f:facet name="header">
+                    <p:outputLabel value="Machine Catalog"/>
+                </f:facet>
 
-    <div class="datatable">
-        <p:dataTable var="machineCatalog" id="table" value="#{commandCreation.basket}">
-            <f:facet name="header">
-                Command List
-            </f:facet>
+                <p:panel header="#{machineCatalog.model}" style="text-align:center">
+                    <h:panelGrid columns="1" style="width:100%">
 
-            <p:column headerText="Model">
-                <h:outputText value="#{machineCatalog.model}" />
-            </p:column>
+                        <img src="#{navigationController.applicationUrl}css/images/#{commandCreation.getImageName(machineCatalog)}" alt=""/>
+                        <h:form id="form">
+                            <p:commandButton id="ajax" update="table grid" action="#{commandCreation.add(machineCatalog)}" value="Add"/>
+                        </h:form>
 
-            <p:column headerText="From">
-                <h:outputText value="#{machineCatalog.selectNiche.from}" />
-            </p:column>
+                    </h:panelGrid>
+                </p:panel>
 
-            <p:column headerText="To">
-                <h:outputText value="#{machineCatalog.selectNiche.to}" />
-            </p:column>
+            </p:dataGrid><br/><br/><br/>
+        </div>
+        <!-- Basket -->
 
-            <p:column headerText="Actions">
-                <h:form>
-                    <p:commandButton id="remove" update="grid table" value="Remove" action="#{commandCreation.remove(machineCatalog)}"/>
-                </h:form>
-            </p:column>
+        <div class="datatable management-datatable">
+            <p:dataTable var="machineCatalog" id="table" value="#{commandCreation.basket}">
+                <f:facet name="header">
+                    Command List
+                </f:facet>
 
-        </p:dataTable>
+                <p:column headerText="Model">
+                    <h:outputText value="#{machineCatalog.model}" />
+                </p:column>
+
+                <p:column headerText="From">
+                    <h:outputText value="#{machineCatalog.selectNiche.from}" />
+                </p:column>
+
+                <p:column headerText="To">
+                    <h:outputText value="#{machineCatalog.selectNiche.to}" />
+                </p:column>
+
+                <p:column headerText="Actions">
+                    <h:form>
+                        <p:commandButton id="remove" update="grid table" value="Remove" action="#{commandCreation.remove(machineCatalog)}"/>
+                    </h:form>
+                </p:column>
+
+            </p:dataTable>
+        </div>
+
+        <div class="command-grid command-submit-button-datatable">
+            <h:form id="form-submit">
+                <p:commandButton type="submit" id="execute" action="#{commandCreation.execute()}" value="Confirm" ajax="false"/>
+            </h:form>
+        </div>
     </div>
-
 </h:body>
 </html>

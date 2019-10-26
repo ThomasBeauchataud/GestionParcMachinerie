@@ -42,6 +42,9 @@ public class CommandCreation implements Serializable {
     private Date to;
     private String clientEmail;
     private String emailMessage = "This email is not associated to any client";
+    private static final String ERROR = "exclamation-circle";
+    private static final String OK = "check-circle";
+    private String emailStatus = ERROR;
 
     @PostConstruct
     public void init() {
@@ -106,6 +109,16 @@ public class CommandCreation implements Serializable {
         this.emailMessage = emailMessage;
     }
 
+
+    public String getEmailStatus() {
+        return emailStatus;
+    }
+
+    public void setEmailStatus(String emailStatus) {
+        this.emailStatus = emailStatus;
+    }
+
+
     public void add(MachineCatalog machineCatalog) {
         machineCatalog.setSelectNiche(new Niche(from, to));
         basket.add(machineCatalog);
@@ -162,8 +175,10 @@ public class CommandCreation implements Serializable {
         Client client = clientManager.findClientByEmail(clientEmail);
         if(client == null) {
             emailMessage = "This email is not associated to any client";
+            emailStatus = ERROR;
         } else {
-            emailMessage = "Client found: " + client.getSurname() + " " + client.getName();
+            emailMessage = "Client  \"" + client.getSurname() + ", " + client.getName() + "\" found!";
+            emailStatus = OK;
         }
     }
 
