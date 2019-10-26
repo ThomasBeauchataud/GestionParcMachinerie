@@ -11,7 +11,44 @@
     <header>
         <ui:include src="/authenticated-header.xhtml" />
     </header>
-    <h:outputLabel> MACHINE CREATION! </h:outputLabel>
+
+    <div class="client-form-wrapper">
+        <div class="client-datatable client-creation-button-datatable">
+            <h:form class="">
+                <p:commandButton id="create" type="submit" action="#{navigationController.goToClientCreation()}" value="Create New Client" ajax="false"/>
+            </h:form>
+        </div>
+        <div class="datatable client-datatable">
+            <p:dataTable var="client" value="#{clientsView.clientList}">
+                <f:facet name="header">
+                    Client List
+                </f:facet>
+                <p:column headerText="Id" style="width: 55px; text-align: center;">
+                    <h:outputText value="#{client.id}" />
+                </p:column>
+
+                <p:column headerText="Name">
+                    <h:outputText value="#{client.name}" />
+                </p:column>
+
+                <p:column headerText="Surname">
+                    <h:outputText value="#{client.surname}" />
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="#{client.email}" />
+                </p:column>
+
+                <p:column headerText="" style="width: 63px; text-align: center;">
+                    <h:form class="" style="margin: 0px;">
+                        <p:commandButton id="edit" type="submit" action="#{clientModification.edit(client.id)}" value="Edit" ajax="false"/>
+                    </h:form>
+                </p:column>
+
+            </p:dataTable>
+        </div>
+    </div>
+
 </h:body>
 
 </html>
