@@ -16,6 +16,10 @@ public class Command implements Serializable {
 
     public Command() { }
 
+    public Command(int id) {
+        this.id = id;
+    }
+
     public Command(Machine machine, Client client, Date from, Date to) {
         this.machine = machine;
         this.client = client;

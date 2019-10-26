@@ -3,15 +3,47 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
 </h:head>
-
 <h:body>
+
     <header>
         <ui:include src="/authenticated-header.xhtml" />
     </header>
-    <h:outputLabel> MACHINE CREATION! </h:outputLabel>
-</h:body>
 
+    <h:form>
+        <p:commandButton id="create" type="submit" action="#{navigationController.goToClientCreation()}" value="Create New Client" ajax="false"/>
+    </h:form>
+
+    <div class="datatable">
+        <p:dataTable var="client" value="#{clientsView.clientList}">
+            <f:facet name="header">
+                Command List
+            </f:facet>
+            <p:column headerText="Id">
+                <h:outputText value="#{client.id}" />
+            </p:column>
+
+            <p:column headerText="Client Email">
+                <h:outputText value="#{client.email}" />
+            </p:column>
+
+            <p:column headerText="Machine">
+                <h:outputText value="#{client.name}" />
+            </p:column>
+
+            <p:column headerText="From">
+                <h:outputText value="#{client.surname}" />
+            </p:column>
+
+            <p:column headerText="Action">
+                <h:form>
+                    <p:commandButton value="Details" type="submit" id="details" action="#{navigationController.goToClientDetail(client.id)}" ajax="false"/>
+                </h:form>
+            </p:column>
+
+        </p:dataTable>
+    </div>
+
+</h:body>
 </html>

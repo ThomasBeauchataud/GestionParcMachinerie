@@ -24,4 +24,11 @@ public interface CommandManagerInterface {
      */
     void createCommands(List<Command> commands);
 
+    /**
+     * Return a Command identified by his id
+     * @param id int
+     * @return Command
+     */
+    Command findCommandById(int id);
+
 }

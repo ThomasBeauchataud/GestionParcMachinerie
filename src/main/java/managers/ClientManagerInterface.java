@@ -2,6 +2,8 @@ package managers;
 
 import beans.entities.Client;
 
+import java.util.List;
+
 public interface ClientManagerInterface {
 
     void createClient(Client client);
@@ -19,5 +21,11 @@ public interface ClientManagerInterface {
      * @return Client
      */
     Client findClientByEmail(String email);
+
+    /**
+     * Return all Clients from the database
+     * @return List<Client>
+     */
+    List<Client> findAllClients();
 
 }

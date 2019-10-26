@@ -24,11 +24,11 @@ public class MachineView implements Serializable {
         this.machineList = machineManager.findAllMachines();
     }
 
-    public List<Machine> getCommandList() {
+    public List<Machine> getMachineList() {
         return machineList;
     }
 
-    public void setCommandList(List<Machine> machineList) {
+    public void setMachineList(List<Machine> machineList) {
         this.machineList = machineList;
     }
 

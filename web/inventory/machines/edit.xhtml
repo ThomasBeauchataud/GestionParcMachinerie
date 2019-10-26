@@ -19,8 +19,6 @@
                 Machine Modification Form
             </h:outputLabel>
             <h:panelGrid columns="2" cellpadding="5">
-                <h:outputText value="Model: "/>
-                <p:inputText value="#{machineModification.model}" required="true"/>
                 <h:outputText value="Rent price: " />
                 <p:inputNumber value="#{machineModification.rentPrice}" required="true" decimalPlaces="0" symbol=" CAD/day" symbolPosition="s"/>
                 <p:commandButton id="edit" type="submit" action="#{machineModification.Edit()}" value="Edit" ajax="false"/>

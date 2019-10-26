@@ -1,6 +1,7 @@
 package models;
 
 import beans.entities.Bill;
+import beans.entities.Client;
 import beans.entities.Command;
 import models.common.CommonDao;
 
@@ -51,14 +52,42 @@ public class BillDao extends CommonDao<Bill> implements BillDaoInterface {
 
     @Override
     public void deleteById(int id) {
+        super.deleteById(delete, id);
+    }
 
+    @Override
+    public List<Bill> getByClientId(int id) {
+        List<Bill> list = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectByClientId);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                list.add(this.generateEntity(resultSet));
+            }
+        } catch (Exception e) {
+            log(e.getMessage());
+        }
+        return list;
     }
 
     @Override
     protected Bill generateEntity(ResultSet resultSet) throws SQLException {
-        return null;
+        Bill bill = new Bill(
+                resultSet.getInt("id"),
+                new Client(resultSet.getInt("client_id")),
+                new ArrayList<>(),
+                resultSet.getInt("value"),
+                resultSet.getBoolean("paid")
+        );
+        for(String commandId : resultSet.getString("commands").split("/")){
+            bill.addCommand(new Command(Integer.parseInt(commandId)));
+        }
+        return bill;
     }
 
-    private static final String insert = "INSERT INTO bill (user_id, commands, paid, value) VALUES (?, ?, ?, ?)";
+    private static final String insert = "INSERT INTO bill (client_id, commands, paid, value) VALUES (?, ?, ?, ?)";
+    private static final String selectByClientId = "SELECT * FROM bill WHERE client_id = ?";
+    private static final String delete = "DELETE FROM bill WHERE id = ?";
 
 }

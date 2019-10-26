@@ -26,22 +26,22 @@
     <!-- Catalog Header -->
 
     <h:form id="form-catalog">
-        <h:outputLabel for="from" value="From: "/>
-        <p:calendar id="from" value="#{commandCreation.from}">
-            <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
-        </p:calendar><br/>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="from" value="From: "/>
+            <p:calendar id="from" value="#{commandCreation.from}">
+                <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+            </p:calendar>
 
-        <h:outputLabel for="to" value="To: "/>
-        <p:calendar id="to" value="#{commandCreation.to}">
-            <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
-        </p:calendar><br/>
+            <h:outputLabel for="to" value="To: "/>
+            <p:calendar id="to" value="#{commandCreation.to}">
+                <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+            </p:calendar>
 
-        <p:outputPanel style="horiz-align: right; display: inline-block;">
             <h:outputLabel for="search" value="Machine Catalog Search: " />
             <p:inputText id="search" value="#{commandCreation.filterValue}">
                 <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
             </p:inputText>
-        </p:outputPanel>
+        </h:panelGrid>
     </h:form>
 
     <!-- Catalog -->

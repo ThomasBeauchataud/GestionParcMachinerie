@@ -41,6 +41,12 @@ public class CommandManager implements CommandManagerInterface {
     }
 
     @Override
+    public Command findCommandById(int id) {
+        Command command = commandDao.getById(id);
+        return this.enrichCommand(command);
+    }
+
+    @Override
     public List<Command> findFutureCommands() {
         List<Command> commands = commandDao.getFuture();
         List<Command> finalCommandList = new ArrayList<>();

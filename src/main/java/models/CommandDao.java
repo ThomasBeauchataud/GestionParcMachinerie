@@ -77,7 +77,7 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
             PreparedStatement preparedStatement = this.getConnection().prepareStatement(lastIndex);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            return resultSet.getInt("AUTO_INCREMENT");
+            return resultSet.getInt("lastId");
         } catch (Exception e) {
             log(e.getMessage());
             return 0;
@@ -101,6 +101,6 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
     private static final String selectUpTo = "SELECT * FROM command WHERE `to` > ?";
     private static final String insert = "INSERT INTO command (client_id, machine_id, `from`, `to`, status) VALUES (?, ?, ?, ?, ?)";
     private static final String deleteById = "DELETE FROM command WHERE id = ?";
-    private static final String lastIndex = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'command'";
+    private static final String lastIndex = "SELECT max(id) as lastId FROM command";
 
 }

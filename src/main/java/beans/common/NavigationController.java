@@ -34,6 +34,14 @@ public class NavigationController implements Serializable {
         return "/clients/index.xhtml?faces-redirect=true";
     }
 
+    public String goToClientCreation() {
+        return "/clients/creation.xhtml?faces-redirect=true";
+    }
+
+    public String goToClientDetail(int id) {
+        return "/clients/consultation.xhtml?faces-redirect=true&id="+id;
+    }
+
     public String goToCommandCreation() {
         return "/commands/creation.xhtml?faces-redirect=true";
     }

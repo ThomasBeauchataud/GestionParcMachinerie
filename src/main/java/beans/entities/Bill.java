@@ -11,6 +11,16 @@ public class Bill implements Serializable {
     private int value;
     private boolean paid = false;
 
+    public Bill() { }
+
+    public Bill(int id, Client client, List<Command> commandList, int value, boolean paid) {
+        this.id = id;
+        this.client = client;
+        this.commandList = commandList;
+        this.value = value;
+        this.paid = paid;
+    }
+
     public int getId() {
         return id;
     }
@@ -33,6 +43,10 @@ public class Bill implements Serializable {
 
     public void setCommandList(List<Command> commandList) {
         this.commandList = commandList;
+    }
+
+    public void addCommand(Command command) {
+        this.commandList.add(command);
     }
 
     public int getValue() {
