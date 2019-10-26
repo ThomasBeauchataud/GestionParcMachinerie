@@ -11,7 +11,6 @@ import javax.enterprise.inject.Default;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,22 +21,18 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
 
     @Override
     public void insert(Command object) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insert);
-            preparedStatement.setInt(1, object.getClient().getId());
-            preparedStatement.setInt(2, object.getMachine().getId());
-            preparedStatement.setLong(3, object.getFrom().getTime());
-            preparedStatement.setLong(4, object.getTo().getTime());
-            preparedStatement.setString(5, object.getCommandStatus().name());
-            preparedStatement.execute();
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
+        super.insert(insert, new Object[]{
+                object.getClient().getId(),
+                object.getMachine().getId(),
+                object.getFrom().getTime(),
+                object.getTo().getTime(),
+                object.getCommandStatus().name()
+        });
     }
 
     @Override
     public void update(Command object) {
-
+        super.update(update, new Object[]{object.getCommandStatus().name(), object.getId()});
     }
 
     @Override
@@ -51,24 +46,13 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
     }
 
     @Override
-    public Command[] getAll() {
-        return super.getAll(select).toArray(new Command[0]);
+    public List<Command> getAll() {
+        return super.getAll(select);
     }
 
     @Override
     public List<Command> getFuture() {
-        List<Command> list = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectUpTo);
-            preparedStatement.setLong(1, new Date().getTime());
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
-                list.add(this.generateEntity(resultSet));
-            }
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
-        return list;
+        return super.getMultiple(selectUpTo, new Object[]{new Date().getTime()});
     }
 
     @Override
@@ -85,6 +69,11 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
     }
 
     @Override
+    public List<Command> getByMachineId(int id) {
+        return super.getMultiple(selectByMachineId, new Object[]{id});
+    }
+
+    @Override
     protected Command generateEntity(ResultSet resultSet) throws SQLException {
         return new Command(
                 resultSet.getInt("id"),
@@ -98,8 +87,10 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
 
     private static final String select = "SELECT * FROM command";
     private static final String selectById = "SELECT * FROM command WHERE id = ?";
+    private static final String selectByMachineId = "SELECT * FROM command WHERE machine_id = ?";
     private static final String selectUpTo = "SELECT * FROM command WHERE `to` > ?";
     private static final String insert = "INSERT INTO command (client_id, machine_id, `from`, `to`, status) VALUES (?, ?, ?, ?, ?)";
+    private static final String update = "UPDATE FROM command SET status = ? WHERE id = ?";
     private static final String deleteById = "DELETE FROM command WHERE id = ?";
     private static final String lastIndex = "SELECT max(id) as lastId FROM command";
 

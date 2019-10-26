@@ -8,9 +8,9 @@ public interface CommandManagerInterface {
 
     /**
      * Return all Commands from the database
-     * @return Command[]
+     * @return List<Command>
      */
-    Command[] findAllCommands();
+    List<Command> findAllCommands();
 
     /**
      * Return all future commands
@@ -30,5 +30,12 @@ public interface CommandManagerInterface {
      * @return Command
      */
     Command findCommandById(int id);
+
+    /**
+     * Return a Command identified by his Machine id
+     * @param id int
+     * @return List<Command>
+     */
+    List<Command> findByMachineId(int id);
 
 }

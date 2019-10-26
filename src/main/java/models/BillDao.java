@@ -7,7 +7,6 @@ import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,31 +22,27 @@ public class BillDao extends CommonDao<Bill> implements BillDaoInterface {
         for(Command command : object.getCommandList()) {
             commandList.add(String.valueOf(command.getId()));
         }
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insert);
-            preparedStatement.setInt(1, object.getClient().getId());
-            preparedStatement.setString(2, String.join("/", commandList));
-            preparedStatement.setBoolean(3, object.isPaid());
-            preparedStatement.setInt(4, object.getValue());
-            preparedStatement.execute();
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
+        super.insert(insert, new Object[]{
+                object.getClient().getId(),
+                String.join("/", commandList),
+                object.isPaid(),
+                object.getValue()
+        });
     }
 
     @Override
     public void update(Bill object) {
-
+        super.update(update, new Object[]{object.isPaid(), object.getId()});
     }
 
     @Override
     public Bill getById(int id) {
-        return null;
+        return super.getById(selectById, id);
     }
 
     @Override
-    public Bill[] getAll() {
-        return new Bill[0];
+    public List<Bill> getAll() {
+        return super.getAll(select);
     }
 
     @Override
@@ -57,18 +52,7 @@ public class BillDao extends CommonDao<Bill> implements BillDaoInterface {
 
     @Override
     public List<Bill> getByClientId(int id) {
-        List<Bill> list = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectByClientId);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
-                list.add(this.generateEntity(resultSet));
-            }
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
-        return list;
+        return this.getMultiple(selectByClientId, new Object[]{id});
     }
 
     @Override
@@ -88,6 +72,9 @@ public class BillDao extends CommonDao<Bill> implements BillDaoInterface {
 
     private static final String insert = "INSERT INTO bill (client_id, commands, paid, value) VALUES (?, ?, ?, ?)";
     private static final String selectByClientId = "SELECT * FROM bill WHERE client_id = ?";
+    private static final String selectById = "SELECT * FROM bill WHERE id = ?";
+    private static final String select = "SELECT * FROM bill";
+    private static final String update = "UPDATE FROM bill SET paid = ? WHERE id = ?";
     private static final String delete = "DELETE FROM bill WHERE id = ?";
 
 }

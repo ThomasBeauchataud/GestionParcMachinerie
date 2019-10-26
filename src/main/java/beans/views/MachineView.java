@@ -1,14 +1,15 @@
 package beans.views;
 
-import beans.entities.Machine;
-import managers.MachineManagerInterface;
+import beans.entities.Command;
+import managers.CommandManagerInterface;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 @Named
@@ -16,20 +17,22 @@ import java.util.List;
 public class MachineView implements Serializable {
 
     @Inject
-    private MachineManagerInterface machineManager;
-    private List<Machine> machineList;
+    private CommandManagerInterface commandManager;
+
+    private List<Command> commandList;
 
     @PostConstruct
     public void init() {
-        this.machineList = machineManager.findAllMachines();
+        int id = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id"));
+        commandList = commandManager.findByMachineId(id);
     }
 
-    public List<Machine> getMachineList() {
-        return machineList;
+    public List<Command> getCommandList() {
+        return commandList;
     }
 
-    public void setMachineList(List<Machine> machineList) {
-        this.machineList = machineList;
+    public void setCommandList(List<Command> commandList) {
+        this.commandList = commandList;
     }
 
 }

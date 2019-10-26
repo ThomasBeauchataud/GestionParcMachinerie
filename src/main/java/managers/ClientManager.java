@@ -6,7 +6,6 @@ import models.ClientDaoInterface;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
-import java.util.Arrays;
 import java.util.List;
 
 @ApplicationScoped
@@ -20,7 +19,7 @@ public class ClientManager implements ClientManagerInterface {
     public void createClient(Client client) { clientDao.insert(client); }
 
     @Override
-    public List<Client> findAllClients() { return Arrays.asList(clientDao.getAll()); }
+    public List<Client> findAllClients() { return clientDao.getAll(); }
 
     @Override
     public Client findClientById(int id) {

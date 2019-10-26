@@ -22,13 +22,13 @@ public class CommandManager implements CommandManagerInterface {
     private CommandDaoInterface commandDao;
 
     @Override
-    public Command[] findAllCommands() {
-        Command[] commands = commandDao.getAll();
+    public List<Command> findAllCommands() {
+        List<Command> commands = commandDao.getAll();
         List<Command> finalCommandList = new ArrayList<>();
         for(Command command : commands) {
             finalCommandList.add(this.enrichCommand(command));
         }
-        return finalCommandList.toArray(new Command[0]);
+        return finalCommandList;
     }
 
     @Override
@@ -44,6 +44,16 @@ public class CommandManager implements CommandManagerInterface {
     public Command findCommandById(int id) {
         Command command = commandDao.getById(id);
         return this.enrichCommand(command);
+    }
+
+    @Override
+    public List<Command> findByMachineId(int id) {
+        List<Command> commands = commandDao.getByMachineId(id);
+        List<Command> finalCommandList = new ArrayList<>();
+        for(Command command : commands) {
+            finalCommandList.add(this.enrichCommand(command));
+        }
+        return finalCommandList;
     }
 
     @Override

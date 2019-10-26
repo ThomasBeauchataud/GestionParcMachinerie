@@ -6,7 +6,6 @@ import models.MachineDaoInterface;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
-import java.util.Arrays;
 import java.util.List;
 
 @ApplicationScoped
@@ -36,12 +35,7 @@ public class MachineManager implements MachineManagerInterface {
 
     @Override
     public List<Machine> findAllMachines() {
-        return Arrays.asList(machineDao.getAll());
-    }
-
-    @Override
-    public List<Machine> filterMachinesForCatalog(List<Machine> machines) {
-        return machines;
+        return machineDao.getAll();
     }
 
 }

@@ -5,9 +5,9 @@ import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @ApplicationScoped
 @Default
@@ -16,27 +16,12 @@ public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
 
     @Override
     public void insert(Client client) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insert);
-            preparedStatement.setString(1, client.getName());
-            preparedStatement.setString(2, client.getSurname());
-            preparedStatement.setString(3, client.getEmail());
-            preparedStatement.execute();
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
+        super.insert(insert, new Object[]{client.getName(), client.getSurname(), client.getEmail()});
     }
 
     @Override
     public void update(Client client) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(update);
-            preparedStatement.setString(1, client.getEmail());
-            preparedStatement.setInt(2, client.getId());
-            preparedStatement.execute();
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
+        super.update(update, new Object[]{client.getEmail(), client.getId()});
     }
 
     @Override
@@ -45,22 +30,13 @@ public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
     }
 
     @Override
-    public Client[] getAll() {
-        return super.getAll(select).toArray(new Client[0]);
+    public List<Client> getAll() {
+        return super.getAll(select);
     }
 
     @Override
     public Client getByEmail(String email) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectByEmail);
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return this.generateEntity(resultSet);
-        } catch (Exception e) {
-            log(e.getMessage());
-            return null;
-        }
+        return super.getOne(selectByEmail, new Object[]{email});
     }
 
     @Override

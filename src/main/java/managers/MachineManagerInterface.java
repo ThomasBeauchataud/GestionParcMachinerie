@@ -37,11 +37,4 @@ public interface MachineManagerInterface {
      */
     List<Machine> findAllMachines();
 
-    /**
-     * Filter a Machine list to get a catalog
-     * @param machines List<Machine>
-     * @return List<Machine>
-     */
-    List<Machine> filterMachinesForCatalog(List<Machine> machines);
-
 }
