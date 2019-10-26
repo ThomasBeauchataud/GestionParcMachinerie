@@ -15,13 +15,28 @@ import java.sql.SQLException;
 public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
 
     @Override
-    public void insert(Client object) {
-
+    public void insert(Client client) {
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insert);
+            preparedStatement.setString(1, client.getName());
+            preparedStatement.setString(2, client.getSurname());
+            preparedStatement.setString(3, client.getEmail());
+            preparedStatement.execute();
+        } catch (Exception e) {
+            log(e.getMessage());
+        }
     }
 
     @Override
-    public void update(Client object) {
-
+    public void update(Client client) {
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(update);
+            preparedStatement.setString(1, client.getEmail());
+            preparedStatement.setInt(2, client.getId());
+            preparedStatement.execute();
+        } catch (Exception e) {
+            log(e.getMessage());
+        }
     }
 
     @Override
@@ -67,5 +82,7 @@ public class ClientDao extends CommonDao<Client> implements ClientDaoInterface {
     private static final String selectById = "SELECT * FROM client WHERE id = ?";
     private static final String selectByEmail = "SELECT * FROM client WHERE email = ?";
     private static final String deleteById = "DELETE FROM client WHERE id = ?";
+    private static String insert = "INSERT INTO client (name, surname, email) VALUES (?, ?, ?)";
+    private static String update = "UPDATE client SET email = ? WHERE id = ?";
 
 }

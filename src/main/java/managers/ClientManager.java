@@ -17,9 +17,10 @@ public class ClientManager implements ClientManagerInterface {
     private ClientDaoInterface clientDao;
 
     @Override
-    public void createClient(Client client) {
+    public void createClient(Client client) { clientDao.insert(client); }
 
-    }
+    @Override
+    public List<Client> findAllClients() { return Arrays.asList(clientDao.getAll()); }
 
     @Override
     public Client findClientById(int id) {
@@ -32,8 +33,11 @@ public class ClientManager implements ClientManagerInterface {
     }
 
     @Override
-    public List<Client> findAllClients() {
-        return Arrays.asList(clientDao.getAll());
+    public void deleteClient(Client client) {
+        clientDao.deleteById(client.getId());
     }
+
+    @Override
+    public void editClient(Client client) { clientDao.update(client); }
 
 }

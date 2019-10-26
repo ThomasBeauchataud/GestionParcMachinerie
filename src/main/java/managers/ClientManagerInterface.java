@@ -8,6 +8,8 @@ public interface ClientManagerInterface {
 
     void createClient(Client client);
 
+    List<Client> findAllClients();
+
     /**
      * Return a Client from the database identified by his id
      * @param id int
@@ -23,9 +25,15 @@ public interface ClientManagerInterface {
     Client findClientByEmail(String email);
 
     /**
-     * Return all Clients from the database
-     * @return List<Client>
+     *  Delete a client in the database
+     * @param client Client
      */
-    List<Client> findAllClients();
+    void deleteClient(Client client);
+
+    /**
+     * Edit a client in the database
+     * @param client Client
+     */
+    void editClient(Client client);
 
 }
