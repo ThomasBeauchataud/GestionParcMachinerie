@@ -3,7 +3,6 @@ package managers;
 import beans.entities.Bill;
 import beans.entities.Client;
 import beans.entities.Command;
-import managers.common.CommonManager;
 import models.BillDaoInterface;
 import models.CommandDaoInterface;
 
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Default
 @ApplicationScoped
-public class BillManager extends CommonManager<Bill> implements BillManagerInterface {
+public class BillManager implements BillManagerInterface {
 
     @Inject
     private CommandManagerInterface commandManager;
@@ -74,15 +73,13 @@ public class BillManager extends CommonManager<Bill> implements BillManagerInter
         return total;
     }
 
-    @Override
-    protected Bill enrich(Bill bill) {
+    private void enrich(Bill bill) {
         List<Command> finalCommandList = new ArrayList<>();
         bill.setClient(clientManager.findClientById(bill.getClient().getId()));
         for(Command command : bill.getCommandList()) {
             finalCommandList.add(commandManager.findCommandById(command.getId()));
         }
         bill.setCommandList(finalCommandList);
-        return bill;
     }
 
 }

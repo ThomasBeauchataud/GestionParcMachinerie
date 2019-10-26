@@ -5,9 +5,9 @@ import models.common.CommonDao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @ApplicationScoped
 @Default
@@ -16,26 +16,12 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
 
     @Override
     public void insert(Machine machine) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(insert);
-            preparedStatement.setString(1, machine.getModel());
-            preparedStatement.setInt(2, machine.getRentPrice());
-            preparedStatement.execute();
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
+        super.insert(insert, new Object[]{machine.getModel(), machine.getRentPrice()});
     }
 
     @Override
     public void update(Machine machine) {
-        try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(update);
-            preparedStatement.setInt(1, machine.getRentPrice());
-            preparedStatement.setInt(2, machine.getId());
-            preparedStatement.execute();
-        } catch (Exception e) {
-            log(e.getMessage());
-        }
+        super.update(update, new Object[]{machine.getRentPrice(), machine.getId()});
     }
 
     @Override
@@ -44,8 +30,8 @@ public class MachineDao extends CommonDao<Machine> implements MachineDaoInterfac
     }
 
     @Override
-    public Machine[] getAll() {
-        return super.getAll(select).toArray(new Machine[0]);
+    public List<Machine> getAll() {
+        return super.getAll(select);
     }
 
     @Override

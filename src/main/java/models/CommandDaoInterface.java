@@ -8,12 +8,6 @@ import java.util.List;
 public interface CommandDaoInterface extends CommonDaoInterface<Command> {
 
     /**
-     * Return all Commands from the database
-     * @return Command[]
-     */
-    Command[] getAll();
-
-    /**
      * Return all future Commands from the database
      * @return List<Command>
      */
@@ -24,5 +18,12 @@ public interface CommandDaoInterface extends CommonDaoInterface<Command> {
      * @return int
      */
     int getLastIndex();
+
+    /**
+     * Return Commands from the database identified by their Machine id
+     * @param id int
+     * @return List<Command>
+     */
+    List<Command> getByMachineId(int id);
 
 }
