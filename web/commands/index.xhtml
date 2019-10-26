@@ -24,12 +24,12 @@
                 <h:outputText value="#{command.id}" />
             </p:column>
 
-            <p:column headerText="Client Name">
-                <h:outputText value="#{command.client.name}" />
+            <p:column headerText="Client Email">
+                <h:outputText value="#{command.client.email}" />
             </p:column>
 
             <p:column headerText="Machine">
-                <h:outputText value="#{command.machine.id}" />
+                <h:outputText value="#{command.machine.model}" />
             </p:column>
 
             <p:column headerText="From">
@@ -38,6 +38,10 @@
 
             <p:column headerText="To">
                 <h:outputText value="#{command.to}" />
+            </p:column>
+
+            <p:column headerText="Status">
+                <h:outputText value="#{command.commandStatus.name()}" />
             </p:column>
 
         </p:dataTable>

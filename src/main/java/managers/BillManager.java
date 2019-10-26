@@ -3,6 +3,7 @@ package managers;
 import beans.entities.Bill;
 import beans.entities.Command;
 import models.BillDaoInterface;
+import models.CommandDaoInterface;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
@@ -14,6 +15,8 @@ import java.util.List;
 public class BillManager implements BillManagerInterface {
 
     @Inject
+    private CommandDaoInterface commandDao;
+    @Inject
     private BillDaoInterface billDao;
     @Inject
     private ClientManagerInterface clientManager;
@@ -21,14 +24,19 @@ public class BillManager implements BillManagerInterface {
     @Override
     public void generateBill(List<Command> commandList, String email) {
         Bill bill = new Bill();
-        bill.setCommandList(commandList);
         int total = 0;
+        int commandIndex = commandDao.getLastIndex();
         for(Command command : commandList) {
+            command.setId(commandIndex);
+            commandIndex++;
             total += command.getMachine().getRentPrice();
         }
+        bill.setCommandList(commandList);
         bill.setClient(clientManager.findClientByEmail(email));
         total = this.generateDiscount(total, commandList);
         bill.setValue(total);
+        //TODO Here we declare that bills are always paid
+        bill.setPaid(true);
         billDao.insert(bill);
     }
 

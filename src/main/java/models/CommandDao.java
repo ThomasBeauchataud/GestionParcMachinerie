@@ -28,6 +28,7 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
             preparedStatement.setInt(2, object.getMachine().getId());
             preparedStatement.setLong(3, object.getFrom().getTime());
             preparedStatement.setLong(4, object.getTo().getTime());
+            preparedStatement.setString(5, object.getCommandStatus().name());
             preparedStatement.execute();
         } catch (Exception e) {
             log(e.getMessage());
@@ -58,15 +59,29 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
     public List<Command> getFuture() {
         List<Command> list = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectUpFrom);
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(selectUpTo);
             preparedStatement.setLong(1, new Date().getTime());
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            list.add(this.generateEntity(resultSet));
+            while(resultSet.next()) {
+                list.add(this.generateEntity(resultSet));
+            }
         } catch (Exception e) {
             log(e.getMessage());
         }
         return list;
+    }
+
+    @Override
+    public int getLastIndex() {
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement(lastIndex);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("AUTO_INCREMENT");
+        } catch (Exception e) {
+            log(e.getMessage());
+            return 0;
+        }
     }
 
     @Override
@@ -83,8 +98,9 @@ public class CommandDao extends CommonDao<Command> implements CommandDaoInterfac
 
     private static final String select = "SELECT * FROM command";
     private static final String selectById = "SELECT * FROM command WHERE id = ?";
-    private static final String selectUpFrom = "SELECT * FROM command WHERE `from` > ?";
-    private static final String insert = "INSERT INTO command (client_id, machine_id, `from`, `to`) VALUES (?, ?, ?, ?)";
+    private static final String selectUpTo = "SELECT * FROM command WHERE `to` > ?";
+    private static final String insert = "INSERT INTO command (client_id, machine_id, `from`, `to`, status) VALUES (?, ?, ?, ?, ?)";
     private static final String deleteById = "DELETE FROM command WHERE id = ?";
+    private static final String lastIndex = "SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'command'";
 
 }

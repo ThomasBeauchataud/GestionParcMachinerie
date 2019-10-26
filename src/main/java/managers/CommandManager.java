@@ -1,6 +1,7 @@
 package managers;
 
 import beans.entities.Command;
+import beans.entities.enums.CommandStatus;
 import models.CommandDaoInterface;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -33,6 +34,8 @@ public class CommandManager implements CommandManagerInterface {
     @Override
     public void createCommands(List<Command> commands) {
         for(Command command : commands) {
+            //TODO Here we declare that a command is always paid
+            command.setCommandStatus(CommandStatus.paid);
             commandDao.insert(command);
         }
     }

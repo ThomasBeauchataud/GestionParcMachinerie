@@ -87,6 +87,12 @@
                 <h:outputText value="#{machineCatalog.selectNiche.to}" />
             </p:column>
 
+            <p:column headerText="Actions">
+                <h:form>
+                    <p:commandButton id="remove" update="grid table" value="Remove" action="#{commandCreation.remove(machineCatalog)}"/>
+                </h:form>
+            </p:column>
+
         </p:dataTable>
     </div>
 

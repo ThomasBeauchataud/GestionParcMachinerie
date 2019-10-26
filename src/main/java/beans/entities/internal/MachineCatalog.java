@@ -10,9 +10,10 @@ public class MachineCatalog extends Machine implements Serializable {
     private List<Niche> slots;
     private Niche selectNiche;
 
-    public MachineCatalog(int id, String model, List<Niche> slots) {
-        this.setId(id);
-        this.setModel(model);
+    public MachineCatalog(Machine machine, List<Niche> slots) {
+        this.setId(machine.getId());
+        this.setModel(machine.getModel());
+        this.setRentPrice(machine.getRentPrice());
         this.slots = slots;
     }
 

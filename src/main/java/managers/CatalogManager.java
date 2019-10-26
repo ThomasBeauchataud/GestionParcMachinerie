@@ -49,21 +49,20 @@ public class CatalogManager implements CatalogManagerInterface {
                 }
             }
             for(int i = 0 ; i < dateList.size() ; i += 2) {
-                Niche niche = nicheList.get(nicheList.size()-1);
-                if(dateList.get(i).after(niche.getFrom())) {
-                    niche.setFrom(dateList.get(i));
+                Niche lastNiche = nicheList.get(nicheList.size()-1);
+                if(i == 0 && dateList.get(i).before(lastNiche.getFrom())) {
+                    lastNiche.setFrom(dateList.get(i+1));
+                    lastNiche.setTo(null);
+                    nicheList.set(nicheList.size()-1, lastNiche);
                     continue;
                 }
-                niche.setTo(dateList.get(i));
-                nicheList.set(nicheList.size()-1, niche);
+                lastNiche.setTo(dateList.get(i));
+                nicheList.set(nicheList.size()-1, lastNiche);
                 Niche newNiche = new Niche();
                 newNiche.setFrom(dateList.get(i+1));
                 nicheList.add(newNiche);
             }
-            Niche niche = nicheList.get(nicheList.size()-1);
-            niche.setTo(null);
-            nicheList.set(nicheList.size()-1, niche);
-            machineCatalogs.add(new MachineCatalog(machine.getId(), machine.getModel(), nicheList));
+            machineCatalogs.add(new MachineCatalog(machine, nicheList));
         }
         this.machineCatalogList = machineCatalogs;
     }

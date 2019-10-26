@@ -19,4 +19,10 @@ public interface CommandDaoInterface extends CommonDaoInterface<Command> {
      */
     List<Command> getFuture();
 
+    /**
+     * Return the last index of the table
+     * @return int
+     */
+    int getLastIndex();
+
 }

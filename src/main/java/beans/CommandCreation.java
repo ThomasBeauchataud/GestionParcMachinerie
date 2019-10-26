@@ -109,7 +109,12 @@ public class CommandCreation implements Serializable {
     public void add(MachineCatalog machineCatalog) {
         machineCatalog.setSelectNiche(new Niche(from, to));
         basket.add(machineCatalog);
-        this.machineCatalog.remove(machineCatalog);
+        this.filter();
+    }
+
+    public void remove(MachineCatalog machineCatalog) {
+        machineCatalog.setSelectNiche(null);
+        basket.remove(machineCatalog);
         this.filter();
     }
 
@@ -122,17 +127,34 @@ public class CommandCreation implements Serializable {
     }
 
     public void filter() {
-        if(from != null && to != null) {
-            machineCatalogFiltered = new ArrayList<>();
+        machineCatalogFiltered = new ArrayList<>();
+        if(from != null && to != null && from.before(to)) {
+            List<MachineCatalog> machineCatalogFilteredTemp = new ArrayList<>();
             if (filterValue != null && !filterValue.equals("")) {
-                for (MachineCatalog machine : machineCatalog) {
-                    if (machine.getModel().contains(filterValue)) {
-                        machineCatalogFiltered.add(machine);
+                for (MachineCatalog machineCatalog : machineCatalog) {
+                    if (machineCatalog.getModel().contains(filterValue)) {
+                        machineCatalogFilteredTemp.add(machineCatalog);
                     }
                 }
             } else {
-                machineCatalogFiltered = machineCatalog;
+                machineCatalogFilteredTemp = machineCatalog;
             }
+            for (MachineCatalog machineCatalog : machineCatalogFilteredTemp) {
+                for (Niche niche : machineCatalog.getSlots()) {
+                    if (niche.getFrom().before(this.from) && (niche.getTo() == null || niche.getTo().after(this.to))) {
+                        machineCatalogFiltered.add(machineCatalog);
+                    }
+                }
+            }
+            machineCatalogFilteredTemp = new ArrayList<>(machineCatalogFiltered);
+            for (MachineCatalog machineCatalog : machineCatalogFiltered) {
+                for (MachineCatalog machineCatalog2 : basket) {
+                    if (machineCatalog.getId() == machineCatalog2.getId()) {
+                        machineCatalogFilteredTemp.remove(machineCatalog);
+                    }
+                }
+            }
+            machineCatalogFiltered = machineCatalogFilteredTemp;
         }
     }
 

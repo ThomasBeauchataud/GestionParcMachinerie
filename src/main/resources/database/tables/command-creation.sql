@@ -4,5 +4,6 @@ create table command
     client_id           int,
     machine_id          int,
     `from`              long,
-    `to`                long
+    `to`                long,
+    status              varchar(255)
 );
