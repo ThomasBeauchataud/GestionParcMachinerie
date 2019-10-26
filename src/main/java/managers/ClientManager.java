@@ -6,6 +6,8 @@ import models.ClientDaoInterface;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.List;
 
 @ApplicationScoped
 @Default
@@ -15,9 +17,10 @@ public class ClientManager implements ClientManagerInterface {
     private ClientDaoInterface clientDao;
 
     @Override
-    public void createClient(Client client) {
+    public void createClient(Client client) { clientDao.insert(client); }
 
-    }
+    @Override
+    public List<Client> findAllClients() { return Arrays.asList(clientDao.getAll()); }
 
     @Override
     public Client findClientById(int id) {
@@ -28,5 +31,13 @@ public class ClientManager implements ClientManagerInterface {
     public Client findClientByEmail(String email) {
         return clientDao.getByEmail(email);
     }
+
+    @Override
+    public void deleteClient(Client client) {
+        clientDao.deleteById(client.getId());
+    }
+
+    @Override
+    public void editClient(Client client) { clientDao.update(client); }
 
 }
