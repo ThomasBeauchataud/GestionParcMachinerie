@@ -44,7 +44,7 @@ public class CasManager implements CasManagerInterface {
         }
     }
 
-    public JSONObject getUserInformation(String ticket) {
+    private JSONObject getUserInformation(String ticket) {
         try {
             JSONObject jsonRequest = new JSONObject();
             jsonRequest.put("ticket", ticket);
@@ -75,27 +75,24 @@ public class CasManager implements CasManagerInterface {
     }
 
     public boolean isAuthenticated(HttpServletRequest request) {
-        return true;
-        /*
         if(request.getSession().getAttribute("active") == null) {
+            if(request.getParameter("ticket") != null && this.isValidTicket(request.getParameter("ticket"))) {
+                this.accept(request, request.getParameter("ticket"));
+                return true;
+            }
             String ticketValue = getTicketInCookies(request.getCookies());
             if(ticketValue != null && this.isValidTicket(ticketValue)) {
-                request.getSession().setAttribute("active", true);
-                JSONObject userInformation = this.getUserInformation(ticketValue);
-                String name = (String)userInformation.get("name");
-                String services = ((String)userInformation.get("services"));
-                sessionManagement.setName(name);
-                sessionManagement.setAdmin(services.contains("CAS"));
-                request.getSession(true);
+                this.accept(request, ticketValue);
                 return true;
             }
             return false;
-        }*/
+        }
+        return true;
     }
 
     @Override
     public String generateCasLoginUrl() {
-        return casUrl + "login?service="+applicationName+"&redirect="+navigationController.getApplicationUrl();
+        return casUrl + "login?service="+applicationName+"&redirect="+navigationController.getApplicationUrl()+"login";
     }
 
     private String getTicketInCookies(Cookie[] cookies) {
@@ -116,6 +113,16 @@ public class CasManager implements CasManagerInterface {
         request.setEntity(params);
         HttpResponse response = httpClient.execute(request);
         return EntityUtils.toString(response.getEntity(), "UTF-8");
+    }
+
+    private void accept(HttpServletRequest request, String ticketValue) {
+        request.getSession().setAttribute("active", true);
+        JSONObject userInformation = this.getUserInformation(ticketValue);
+        String name = (String)userInformation.get("name");
+        String services = ((String)userInformation.get("services"));
+        sessionManagement.setName(name);
+        sessionManagement.setAdmin(services.contains("CAS"));
+        request.getSession(true);
     }
 
 }

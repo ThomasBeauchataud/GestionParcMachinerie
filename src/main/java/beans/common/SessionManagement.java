@@ -44,7 +44,7 @@ public class SessionManagement implements Serializable {
             Context env = (Context) new InitialContext().lookup("java:comp/env");
             String casUrl = (String)env.lookup("cas-url");
             facesContext.getExternalContext().redirect( casUrl +
-                    "logout?logoutFinalPage=" + navigationController.getApplicationUrl()
+                    "logout?redirect=" + navigationController.getApplicationUrl()
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,14 +52,13 @@ public class SessionManagement implements Serializable {
     }
 
     public void isAuthenticated () {
-        /*
         if(name == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(navigationController.getApplicationUrl());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 
 }
