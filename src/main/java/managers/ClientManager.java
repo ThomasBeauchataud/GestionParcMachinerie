@@ -16,7 +16,11 @@ public class ClientManager implements ClientManagerInterface {
     private ClientDaoInterface clientDao;
 
     @Override
-    public void createClient(Client client) { clientDao.insert(client); }
+    public void createClient(Client client) {
+        if (clientDao.getByEmail(client.getEmail()) == null) {
+            clientDao.insert(client);
+        }
+    }
 
     @Override
     public List<Client> findAllClients() { return clientDao.getAll(); }
@@ -37,6 +41,10 @@ public class ClientManager implements ClientManagerInterface {
     }
 
     @Override
-    public void editClient(Client client) { clientDao.update(client); }
+    public void editClient(Client client) {
+        if(clientDao.getById(client.getId()) != null) {
+            clientDao.update(client);
+        }
+    }
 
 }
