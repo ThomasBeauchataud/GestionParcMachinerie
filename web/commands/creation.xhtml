@@ -18,91 +18,96 @@
 
     <!-- Client Header -->
     <div class ="form-wrapper">
-        <h:form id="form-catalog" class="command-grid">
-            <h:panelGrid columns="3" cellpadding="5">
-                <h:outputText for="email" value="Client Email: " />
-                <p:inputText id="email" value="#{commandCreation.clientEmail}">
-                    <p:ajax event="keyup" update="message" listener="#{commandCreation.findUserByEmail()}" />
-                </p:inputText>
-                <h:outputText id="message" class="fa fa-#{commandCreation.emailStatus} #{commandCreation.emailStatus}" value=" #{commandCreation.emailMessage}" />
+        <div class="creation-form">
+            <h:outputLabel class="creation-form-title">
+                Command Creation Form
+            </h:outputLabel>
+            <h:form id="form-catalog" class="command-grid">
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:outputText for="email" value="Client Email: " />
+                    <p:inputText id="email" value="#{commandCreation.clientEmail}">
+                        <p:ajax event="keyup" update="message" listener="#{commandCreation.findUserByEmail()}" />
+                    </p:inputText>
+                    <h:outputText id="message" class="fa fa-#{commandCreation.emailStatus} #{commandCreation.emailStatus}" value=" #{commandCreation.emailMessage}" />
 
-                <h:outputLabel for="from" value="From: "/>
-                <p:calendar id="from" value="#{commandCreation.from}">
-                    <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
-                </p:calendar>
-                <h:outputText id="fromMessage" value="" />
+                    <h:outputLabel for="from" value="From: "/>
+                    <p:calendar id="from" value="#{commandCreation.from}">
+                        <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+                    </p:calendar>
+                    <h:outputText id="fromMessage" value="" />
 
-                <h:outputLabel for="to" value="To: "/>
-                <p:calendar id="to" value="#{commandCreation.to}">
-                    <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
-                </p:calendar>
-                <h:outputText id="toMessage" value="" />
+                    <h:outputLabel for="to" value="To: "/>
+                    <p:calendar id="to" value="#{commandCreation.to}">
+                        <p:ajax event="dateSelect" update="grid" listener="#{commandCreation.filter()}"/>
+                    </p:calendar>
+                    <h:outputText id="toMessage" value="" />
 
 
-                <h:outputLabel for="search" value="Machine Catalog Search: " />
-                <p:inputText id="search" value="#{commandCreation.filterValue}">
-                    <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
-                </p:inputText>
-                <h:outputText id="searchMessage" value="" />
-            </h:panelGrid>
-        </h:form>
-
-        <!-- Catalog -->
-        <div class="command-grid">
-            <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="6" layout="grid"
-                        rows="12" paginator="true" id="grid"
-                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-
-                <f:facet name="header">
-                    <p:outputLabel value="Machine Catalog"/>
-                </f:facet>
-
-                <p:panel header="#{machineCatalog.model}" style="text-align:center">
-                    <h:panelGrid columns="1" style="width:100%">
-
-                        <img src="#{navigationController.applicationUrl}css/images/#{commandCreation.getImageName(machineCatalog)}" alt=""/>
-                        <h:form id="form">
-                            <p:commandButton id="ajax" update="table grid" action="#{commandCreation.add(machineCatalog)}" value="Add"/>
-                        </h:form>
-
-                    </h:panelGrid>
-                </p:panel>
-
-            </p:dataGrid><br/><br/><br/>
-        </div>
-        <!-- Basket -->
-
-        <div class="datatable management-datatable">
-            <p:dataTable var="machineCatalog" id="table" value="#{commandCreation.basket}">
-                <f:facet name="header">
-                    Command List
-                </f:facet>
-
-                <p:column headerText="Model">
-                    <h:outputText value="#{machineCatalog.model}" />
-                </p:column>
-
-                <p:column headerText="From">
-                    <h:outputText value="#{machineCatalog.selectNiche.from}" />
-                </p:column>
-
-                <p:column headerText="To">
-                    <h:outputText value="#{machineCatalog.selectNiche.to}" />
-                </p:column>
-
-                <p:column headerText="Actions">
-                    <h:form>
-                        <p:commandButton id="remove" update="grid table" value="Remove" action="#{commandCreation.remove(machineCatalog)}"/>
-                    </h:form>
-                </p:column>
-
-            </p:dataTable>
-        </div>
-
-        <div class="command-grid command-submit-button-datatable">
-            <h:form id="form-submit">
-                <p:commandButton type="submit" id="execute" action="#{commandCreation.execute()}" value="Confirm" ajax="false"/>
+                    <h:outputLabel for="search" value="Machine Catalog Search: " />
+                    <p:inputText id="search" value="#{commandCreation.filterValue}">
+                        <p:ajax event="keyup" update="grid" listener="#{commandCreation.filter()}" />
+                    </p:inputText>
+                    <h:outputText id="searchMessage" value="" />
+                </h:panelGrid>
             </h:form>
+
+            <!-- Catalog -->
+            <div class="command-grid">
+                <p:dataGrid var="machineCatalog" value="#{commandCreation.machineCatalogFiltered}" columns="6" layout="grid"
+                            rows="12" paginator="true" id="grid"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+                    <f:facet name="header">
+                        <p:outputLabel value="Machine Catalog"/>
+                    </f:facet>
+
+                    <p:panel header="#{machineCatalog.model}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+
+                            <img src="#{navigationController.applicationUrl}css/images/#{commandCreation.getImageName(machineCatalog)}" alt="" style="width:100%"/>
+                            <h:form id="form">
+                                <p:commandButton id="ajax" update="table grid" action="#{commandCreation.add(machineCatalog)}" value="Add"/>
+                            </h:form>
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:dataGrid><br/><br/><br/>
+            </div>
+            <!-- Basket -->
+
+            <div class="datatable management-datatable">
+                <p:dataTable var="machineCatalog" id="table" value="#{commandCreation.basket}">
+                    <f:facet name="header">
+                        Command List
+                    </f:facet>
+
+                    <p:column headerText="Model">
+                        <h:outputText value="#{machineCatalog.model}" />
+                    </p:column>
+
+                    <p:column headerText="From">
+                        <h:outputText value="#{machineCatalog.selectNiche.from}" />
+                    </p:column>
+
+                    <p:column headerText="To">
+                        <h:outputText value="#{machineCatalog.selectNiche.to}" />
+                    </p:column>
+
+                    <p:column headerText="Actions">
+                        <h:form>
+                            <p:commandButton id="remove" update="grid table" value="Remove" action="#{commandCreation.remove(machineCatalog)}"/>
+                        </h:form>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <div class="command-grid command-submit-button-datatable">
+                <h:form id="form-submit">
+                    <p:commandButton type="submit" id="execute" action="#{commandCreation.execute()}" value="Confirm" ajax="false"/>
+                </h:form>
+            </div>
         </div>
     </div>
 </h:body>

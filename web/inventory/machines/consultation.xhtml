@@ -6,6 +6,8 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/home.css"/>
     <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/management.css"/>
+    <link rel="stylesheet" type="text/css" href="#{navigationController.applicationUrl}css/machine.css"/>
 </h:head>
 <h:body>
 
@@ -13,38 +15,44 @@
         <ui:include src="/authenticated-header.xhtml" />
     </header>
 
-        <h:panelGrid columns="1" cellpadding="5">
-            <h:outputText value="Id: #{machineView.machine.id}"/>
-            <h:outputText value="Model: #{machineView.machine.model}"/>
-            <h:outputText value="RentPrice: #{machineView.machine.rentPrice}"/>
+    <div class="form-wrapper">
+
+        <h:panelGrid columns="2" cellpadding="5" class="machine-grid">
+            <h:outputText value="Id: "/>
+            <h:outputText value=" #{machineView.machine.id}"/>
+            <h:outputText value="Model: "/>
+            <h:outputText value=" #{machineView.machine.model}"/>
+            <h:outputText value="RentPrice: "/>
+            <h:outputText value=" #{machineView.machine.rentPrice}"/>
         </h:panelGrid>
 
-    <div class="datatable">
-        <p:dataTable var="command" value="#{machineView.commandList}">
-            <f:facet name="header">
-                Command List
-            </f:facet>
-            <p:column headerText="Id">
-                <h:outputText value="#{command.id}" />
-            </p:column>
+        <div class="datatable management-datatable">
+            <p:dataTable var="command" value="#{machineView.commandList}">
+                <f:facet name="header">
+                    Command List
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{command.id}" />
+                </p:column>
 
-            <p:column headerText="Client Email">
-                <h:outputText value="#{command.client.email}" />
-            </p:column>
+                <p:column headerText="Client Email">
+                    <h:outputText value="#{command.client.email}" />
+                </p:column>
 
-            <p:column headerText="From">
-                <h:outputText value="#{command.from}" />
-            </p:column>
+                <p:column headerText="From">
+                    <h:outputText value="#{command.from}" />
+                </p:column>
 
-            <p:column headerText="To">
-                <h:outputText value="#{command.to}" />
-            </p:column>
+                <p:column headerText="To">
+                    <h:outputText value="#{command.to}" />
+                </p:column>
 
-            <p:column headerText="Bill Id">
-                <h:outputText value="#{command.commandStatus.name()}" />
-            </p:column>
+                <p:column headerText="Bill Id">
+                    <h:outputText value="#{command.commandStatus.name()}" />
+                </p:column>
 
-        </p:dataTable>
+            </p:dataTable>
+        </div>
     </div>
 
 </h:body>
