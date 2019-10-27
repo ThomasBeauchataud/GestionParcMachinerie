@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CommonDao<T> {
+public abstract class CommonDao<T> implements CommonDaoInterface<T> {
 
     @Inject
     private DatabaseManagerInterface databaseManager;

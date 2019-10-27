@@ -3,10 +3,9 @@ package managers;
 import beans.entities.Client;
 import beans.entities.Command;
 
-import java.util.List;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
+import java.util.List;
 
 @ApplicationScoped
 @Default

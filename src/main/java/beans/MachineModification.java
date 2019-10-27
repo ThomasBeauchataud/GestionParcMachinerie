@@ -2,6 +2,7 @@ package beans;
 
 import beans.common.NavigationController;
 import beans.entities.Machine;
+import managers.CatalogManagerInterface;
 import managers.MachineManagerInterface;
 
 import javax.enterprise.context.SessionScoped;
@@ -17,6 +18,8 @@ public class MachineModification extends Machine implements Serializable {
     private MachineManagerInterface machineManager;
     @Inject
     private NavigationController navigationController;
+    @Inject
+    private CatalogManagerInterface catalogManager;
 
     public String Edit() {
         machineManager.editMachine(this);
@@ -25,6 +28,7 @@ public class MachineModification extends Machine implements Serializable {
 
     public String Delete() {
         machineManager.deleteMachine(this);
+        catalogManager.loadMachineCatalog();
         return navigationController.goToMachines();
     }
 
