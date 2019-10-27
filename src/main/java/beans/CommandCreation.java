@@ -34,7 +34,6 @@ public class CommandCreation implements Serializable {
     @Inject
     private CatalogManagerInterface catalogManager;
 
-    private List<MachineCatalog> machineCatalog;
     private List<MachineCatalog> machineCatalogFiltered;
     private List<MachineCatalog> basket;
     private String filterValue;
@@ -49,7 +48,6 @@ public class CommandCreation implements Serializable {
     @PostConstruct
     public void init() {
         catalogManager.loadMachineCatalog();
-        machineCatalog = catalogManager.findMachineCatalog();
         basket = new ArrayList<>();
     }
 
@@ -135,22 +133,23 @@ public class CommandCreation implements Serializable {
         List<Command> commands = catalogManager.generateCommandsWithCatalogs(basket, clientEmail);
         commandManager.createCommands(commands);
         billManager.generateBill(commands, clientEmail);
-        this.init();
+        catalogManager.loadMachineCatalog();
         return navigationController.goToCommands();
     }
 
     public void filter() {
+        List<MachineCatalog> machineCatalogInit = catalogManager.findMachineCatalog();
         machineCatalogFiltered = new ArrayList<>();
         if(from != null && to != null && from.before(to)) {
             List<MachineCatalog> machineCatalogFilteredTemp = new ArrayList<>();
             if (filterValue != null && !filterValue.equals("")) {
-                for (MachineCatalog machineCatalog : machineCatalog) {
+                for (MachineCatalog machineCatalog : machineCatalogInit) {
                     if (machineCatalog.getModel().contains(filterValue)) {
                         machineCatalogFilteredTemp.add(machineCatalog);
                     }
                 }
             } else {
-                machineCatalogFilteredTemp = machineCatalog;
+                machineCatalogFilteredTemp = machineCatalogInit;
             }
             for (MachineCatalog machineCatalog : machineCatalogFilteredTemp) {
                 for (Niche niche : machineCatalog.getSlots()) {

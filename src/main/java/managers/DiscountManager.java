@@ -3,8 +3,12 @@ package managers;
 import beans.entities.Client;
 import beans.entities.Command;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 import java.util.List;
 
+@ApplicationScoped
+@Default
 public class DiscountManager implements DiscountManagerInterface {
 
     @Override
