@@ -125,6 +125,12 @@ public class CommandCreation implements Serializable {
         this.filter();
     }
 
+
+    public String addAndGoToCommand(MachineCatalog machineCatalog) {
+        this.add(machineCatalog);
+        return navigationController.goToCommandCreation();
+    }
+
     public void remove(MachineCatalog machineCatalog) {
         machineCatalog.setSelectNiche(null);
         basket.remove(machineCatalog);

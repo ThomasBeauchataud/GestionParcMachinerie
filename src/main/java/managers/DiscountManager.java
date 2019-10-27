@@ -5,6 +5,11 @@ import beans.entities.Command;
 
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
+
+@ApplicationScoped
+@Default
 public class DiscountManager implements DiscountManagerInterface {
 
     @Override

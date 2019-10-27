@@ -1,0 +1,11 @@
+.home-grid
+{
+    display: inline-block;
+    min-width: 900px;
+    width: 80%;
+}
+
+.home-form
+{
+    text-align: left !important;
+}
