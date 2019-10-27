@@ -9,3 +9,14 @@
 {
     text-align: left !important;
 }
+
+.home-title
+{
+    font-size: xx-large;
+    background-color: deepskyblue;
+    border-radius: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
