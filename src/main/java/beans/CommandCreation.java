@@ -137,8 +137,8 @@ public class CommandCreation implements Serializable {
 
     public String execute() {
         List<Command> commands = catalogManager.generateCommandsWithCatalogs(basket, clientEmail);
-        commandManager.createCommands(commands);
         billManager.generateBill(commands, clientEmail);
+        commandManager.createCommands(commands);
         catalogManager.loadMachineCatalog();
         return navigationController.goToCommands();
     }
